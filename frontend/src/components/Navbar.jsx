@@ -3,19 +3,23 @@ import "../styles/Navbar.css";
 
 function Navbar() {
   return (
-    <nav className="navbar">
-      {/* LEFT SIDE */}
-      <div className="logo">
-        Smart Municipal
+    <header className="navbar">
+      <div className="nav-left">
+        <img src="/assets/logo.png" alt="Logo" className="nav-logo" />
+        <span className="nav-title">Smart Municipal Corporation</span>
       </div>
 
-      {/* RIGHT SIDE */}
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/login">User Login</Link></li>
-        <li><Link to="/admin/login">Admin Login</Link></li>
-      </ul>
-    </nav>
+      <nav className="nav-center">
+        <Link to="/">Home</Link>
+        <a href="#services">Services</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div className="nav-right">
+        <Link to="/login" className="nav-btn">Login</Link>
+      </div>
+    </header>
   );
 }
 
