@@ -1,66 +1,96 @@
 import { useState } from "react";
-import API from "../../services/api";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "../../styles/AdminLogin.css";
+
+
+
+function generateCaptcha() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let captcha = "";
+  for (let i = 0; i < 5; i++) {
+    captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return captcha;
+}
 
 function AdminLogin() {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-    captcha: ""
-  });
+  // ✅ STATES (IMPORTANT)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [captcha] = useState(generateCaptcha());
+  const [captchaInput, setCaptchaInput] = useState("");
+  const navigate = useNavigate();
 
-  const [captchaText] = useState("ADMIN9"); // demo captcha
-  const [message, setMessage] = useState("");
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  if (captchaInput !== captcha) {
+    alert("Invalid Captcha");
+    return;
+  }
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  try {
+    const res = await axios.post(
+      "http://localhost:5000/api/admin/login",
+      {
+        email: email,
+        password: password,
+      }
+    );
 
-    try {
-      const res = await API.post("/auth/login/admin", {
-        ...form,
-        captchaText
-      });
+    localStorage.setItem("adminToken", res.data.token);
+    alert("Admin Login Successful");
 
-      setMessage(res.data.message);
-    } catch (err) {
-      setMessage(err.response?.data?.message || "Admin login failed");
-    }
-  };
+    // ✅ PROPER REDIRECT
+    navigate("/admin/dashboard");
+
+  } catch (err) {
+    alert(err.response?.data?.message || "Login failed");
+  }
+};
+
 
   return (
-    <div>
-      <h2>Admin Login</h2>
+    <div className="admin-login-page">
+      <div className="admin-login-card">
+        <h2>Admin Login</h2>
+        <p className="sub-text">Authorized access only</p>
 
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Admin Email"
-          onChange={handleChange}
-        />
+        <form onSubmit={handleSubmit}>
+          {/* EMAIL */}
+          <input
+            type="email"
+            placeholder="Admin Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
+          {/* PASSWORD */}
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-        <p>Captcha: <b>{captchaText}</b></p>
+          {/* CAPTCHA */}
+          <div className="captcha-row">
+            <div className="captcha-box">{captcha}</div>
+            <input
+              type="text"
+              placeholder="Enter Captcha"
+              value={captchaInput}
+              onChange={(e) => setCaptchaInput(e.target.value)}
+              required
+            />
+          </div>
 
-        <input
-          name="captcha"
-          placeholder="Enter Captcha"
-          onChange={handleChange}
-        />
-
-        <button type="submit">Login</button>
-      </form>
-
-      <p>{message}</p>
+          <button type="submit">Login as Admin</button>
+        </form>
+      </div>
     </div>
   );
 }

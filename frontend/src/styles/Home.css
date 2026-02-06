@@ -1,4 +1,9 @@
 
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+
 /* ================= GLOBAL ================= */
 * {
   margin: 0;
@@ -34,7 +39,7 @@ body {
 }
 
 .hero-text h1 {
-  font-size: 44px;
+  font-size: 46px;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 15px;
@@ -44,6 +49,7 @@ body {
   font-size: 18px;
   color: #f1f1f1;
   margin-bottom: 30px;
+  font-weight: 400;
 }
 
 /* HERO BUTTONS */
@@ -78,6 +84,10 @@ body {
 }
 
 /* ================= SERVICES SECTION ================= */
+#services {
+  scroll-margin-top: 185px; 
+}
+
 .services-section {
   padding: 70px 80px;
   background-color: #ffffff;
@@ -110,6 +120,7 @@ body {
 .service-card h3 {
   font-size: 20px;
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .service-card p {
@@ -123,6 +134,10 @@ body {
 }
 
 /* ================= FEATURES SECTION ================= */
+
+#features {
+  scroll-margin-top: 120px; 
+}
 .features-section {
   padding: 70px 80px;
   background-color: #f5f7fa;
@@ -169,6 +184,8 @@ body {
 }
 
 /* ================= CTA SECTION ================= */
+
+
 .cta-section {
   padding: 100px 80px;
   background-color: #ffffff;

@@ -53,22 +53,22 @@ exports.userLogin = async (req, res) => {
 
 
 //admin login
-exports.adminLogin = async (req, res) => {
-  const { email, password, captcha, captchaText } = req.body;
+// exports.adminLogin = async (req, res) => {
+//   const { email, password, captcha, captchaText } = req.body;
 
-  if (captcha !== captchaText)
-    return res.status(400).json({ message: "Invalid captcha" });
+//   if (captcha !== captchaText)
+//     return res.status(400).json({ message: "Invalid captcha" });
 
-  const admin = await Admin.findOne({ email });
-  if (!admin)
-    return res.status(404).json({ message: "Admin not found" });
+//   const admin = await Admin.findOne({ email });
+//   if (!admin)
+//     return res.status(404).json({ message: "Admin not found" });
 
-  const match = await bcrypt.compare(password, admin.password);
-  if (!match)
-    return res.status(401).json({ message: "Wrong password" });
+//   const match = await bcrypt.compare(password, admin.password);
+//   if (!match)
+//     return res.status(401).json({ message: "Wrong password" });
 
-  res.json({ message: "Admin login success", admin });
-};
+//   res.json({ message: "Admin login success", admin });
+// };
 
 
-//
+// //

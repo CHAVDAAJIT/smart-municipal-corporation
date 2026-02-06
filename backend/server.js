@@ -1,26 +1,25 @@
+require("dotenv").config();
+
 const express = require("express");
-const cors = require("cors");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
-const authRoutes = require("./routes/authRoutes");
-
+const adminAuthRoutes = require("./routes/adminAuth");
+const adminProtectedRoutes = require("./routes/adminProtected");
 const app = express();
 
+// Enable CORS and JSON parsing before mounting routes
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Backend running");
-});
+app.use("/api/admin", adminProtectedRoutes);
+app.use("/api/admin", adminAuthRoutes);
 
-
-app.use("/api/auth", authRoutes);
+mongoose
+  .connect("mongodb://127.0.0.1:27017/smartMunicipal")
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log(err));
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
-
-
-mongoose.connect("mongodb://127.0.0.1:27017/smartMunicipal")
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log("MongoDB Error:", err));

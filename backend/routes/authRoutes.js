@@ -9,6 +9,6 @@ const {
 
 router.post("/register/user", userRegister);
 router.post("/login/user", userLogin);
-router.post("/login/admin", adminLogin);
+// router.post("/login/admin", adminLogin);
 
 module.exports = router;
