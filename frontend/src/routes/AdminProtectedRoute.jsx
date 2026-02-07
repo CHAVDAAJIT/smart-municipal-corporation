@@ -3,13 +3,13 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 
 function AdminProtectedRoute({ children }) {
-  const [allowed, setAllowed] = useState(null);
+  const [authorized, setAuthorized] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("adminToken");
 
     if (!token) {
-      setAllowed(false);
+      setAuthorized(false);
       return;
     }
 
@@ -19,18 +19,18 @@ function AdminProtectedRoute({ children }) {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(() => setAllowed(true))
+      .then(() => setAuthorized(true))
       .catch(() => {
         localStorage.removeItem("adminToken");
-        setAllowed(false);
+        setAuthorized(false);
       });
   }, []);
 
-  if (allowed === null) {
-    return <div>Checking authorization...</div>;
+  if (authorized === null) {
+    return <div>Checking admin access...</div>;
   }
 
-  return allowed ? children : <Navigate to="/admin/login" />;
+  return authorized ? children : <Navigate to="/admin/login" />;
 }
 
 export default AdminProtectedRoute;

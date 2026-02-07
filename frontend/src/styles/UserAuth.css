@@ -1,0 +1,71 @@
+.auth-bg {
+  min-height: 100vh;
+  background: url("../assets/hero-bg.jpg") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card {
+  background: white;
+  width: 380px;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.auth-card h2 {
+  margin-bottom: 5px;
+}
+
+.sub-text {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.captcha-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.captcha-box {
+  background: #f0f0f0;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.auth-card button {
+  width: 100%;
+  padding: 12px;
+  background: #2d9cdb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.auth-card button:hover {
+  background: #1c7bbf;
+}
+
+.link-text {
+  margin-top: 15px;
+}
+
+.message {
+  color: red;
+  margin-top: 10px;
+}

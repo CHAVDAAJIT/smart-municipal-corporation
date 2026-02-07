@@ -6,6 +6,9 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import Navbar from "./components/Navbar";
 import AdminProtectedRoute from "./routes/AdminProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import UserDashboard from "./pages/user/UserDashboard";
+import UserProtectedRoute from "./routes/UserProtectedRoute";
+
 
 function App() {
   return (
@@ -16,6 +19,8 @@ function App() {
         <Route path="/register" element={<UserRegister />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/user/login" element={<UserLogin />} />
+        <Route path="/user/register" element={<UserRegister />} />
         <Route
   path="/admin/dashboard"
   element={
@@ -24,6 +29,12 @@ function App() {
     </AdminProtectedRoute>
   }
 />
+        <Route path="/user/dashboard" element={
+            <UserProtectedRoute>
+              <UserDashboard />
+            </UserProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
