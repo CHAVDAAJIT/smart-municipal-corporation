@@ -1,12 +1,22 @@
-import StatsCard from "./StatsCard";
+import "../../styles/DashboardStats.css";
 
-function DashboardStats() {
+function DashboardStats({ stats }) {
   return (
-    <div className="dashboard-stats">
-      <StatsCard title="Total Complaints" value="12" icon="📝" />
-      <StatsCard title="Pending" value="5" icon="⏳" />
-      <StatsCard title="Resolved" value="7" icon="✅" />
-      <StatsCard title="Notifications" value="3" icon="🔔" />
+    <div className="stats-grid">
+      <div className="stat-card">
+        <h3>{stats.total}</h3>
+        <p>Total Complaints</p>
+      </div>
+
+      <div className="stat-card">
+        <h3>{stats.pending}</h3>
+        <p>Pending</p>
+      </div>
+
+      <div className="stat-card">
+        <h3>{stats.resolved}</h3>
+        <p>Resolved</p>
+      </div>
     </div>
   );
 }

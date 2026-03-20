@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 function AdminQuickActions() {
+  const navigate = useNavigate();
   return (
     <div className="admin-actions">
       <h3>Quick Actions</h3>

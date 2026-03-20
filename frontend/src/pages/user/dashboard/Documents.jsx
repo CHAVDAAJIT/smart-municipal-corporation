@@ -1,0 +1,92 @@
+import React, { useState } from "react";
+import { createDocument } from "../../../services/apiUser";
+import "../../../styles/Documents.css";
+
+const Documents = () => {
+  const [type, setType] = useState("");
+  const [form, setForm] = useState({});
+  const [files, setFiles] = useState([]);
+
+  const token = localStorage.getItem("token");
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("type", type);
+    formData.append("data", JSON.stringify(form));
+
+    files.forEach((file) => {
+      formData.append("documents", file);
+    });
+
+    await createDocument(formData, token);
+    alert("Submitted Successfully");
+  };
+
+  return (
+    <div className="doc-page">
+      <div className="doc-card">
+        <h2>📄 Apply for Certificate</h2>
+        <p className="subtitle">Fill details to request certificate</p>
+
+        {/* Select Type */}
+        <select onChange={(e) => setType(e.target.value)}>
+          <option value="">Select Certificate Type</option>
+          <option value="birth">Birth Certificate</option>
+          <option value="death">Death Certificate</option>
+          <option value="income">Income Certificate</option>
+        </select>
+
+        {/* Birth */}
+        {type === "birth" && (
+          <>
+            <input name="childName" placeholder="Child Name" onChange={handleChange} />
+            <input type="date" name="dob" onChange={handleChange} />
+            <input name="timeOfBirth" placeholder="Time of Birth" onChange={handleChange} />
+            <input name="fatherName" placeholder="Father Name" onChange={handleChange} />
+            <input name="motherName" placeholder="Mother Name" onChange={handleChange} />
+            <input name="hospitalName" placeholder="Hospital Name" onChange={handleChange} />
+            <input name="hospitalAddress" placeholder="Hospital Address" onChange={handleChange} />
+            <input name="address" placeholder="Home Address" onChange={handleChange} />
+          </>
+        )}
+
+        {/* Death */}
+        {type === "death" && (
+          <>
+            <input name="personName" placeholder="Person Name" onChange={handleChange} />
+            <input type="date" name="dateOfDeath" onChange={handleChange} />
+            <input name="causeOfDeath" placeholder="Cause of Death" onChange={handleChange} />
+            <input name="fatherName" placeholder="Father Name" onChange={handleChange} />
+            <input name="address" placeholder="Address" onChange={handleChange} />
+          </>
+        )}
+
+        {/* Income */}
+        {type === "income" && (
+          <>
+            <input name="fullName" placeholder="Full Name" onChange={handleChange} />
+            <input name="fatherName" placeholder="Father Name" onChange={handleChange} />
+            <input name="occupation" placeholder="Occupation" onChange={handleChange} />
+            <input name="income" placeholder="Annual Income" onChange={handleChange} />
+            <input name="aadhaar" placeholder="Aadhaar Number" onChange={handleChange} />
+            <input name="address" placeholder="Address" onChange={handleChange} />
+          </>
+        )}
+
+        {/* Upload */}
+        {type && (
+          <>
+            <input type="file" multiple onChange={(e) => setFiles([...e.target.files])} />
+            <button onClick={handleSubmit}>Submit Request</button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Documents;

@@ -194,8 +194,9 @@
   color: #666;
 }
 
-
-
+.service-card {
+  cursor: pointer;
+}
 
 
 /* ================= MOBILE RESPONSIVE ================= */

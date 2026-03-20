@@ -1,4 +1,24 @@
+import { useEffect, useState } from "react";
+import API from "../../services/apiAdmin";
+import "../../styles/AdminDashboard.css";
+
 function RecentComplaintsTable() {
+  const [complaints, setComplaints] = useState([]);
+
+  useEffect(() => {
+    fetchRecentComplaints();
+  }, []);
+
+  const fetchRecentComplaints = async () => {
+    try {
+      const res = await API.get("/complaints");
+      // latest 5 complaints only
+      setComplaints(res.data.slice(0, 5));
+    } catch (err) {
+      console.log("Admin recent complaints error:", err);
+    }
+  };
+
   return (
     <div className="recent-complaints">
       <h3>Recent Complaints</h3>
@@ -6,7 +26,7 @@ function RecentComplaintsTable() {
       <table>
         <thead>
           <tr>
-            <th>Complaint ID</th>
+            <th>ID</th>
             <th>Citizen</th>
             <th>Category</th>
             <th>Status</th>
@@ -15,29 +35,27 @@ function RecentComplaintsTable() {
         </thead>
 
         <tbody>
-          <tr>
-            <td>#CMP101</td>
-            <td>Rahul Patel</td>
-            <td>Garbage</td>
-            <td className="status pending">Pending</td>
-            <td>12 Aug 2026</td>
-          </tr>
-
-          <tr>
-            <td>#CMP102</td>
-            <td>Amit Shah</td>
-            <td>Water</td>
-            <td className="status resolved">Resolved</td>
-            <td>11 Aug 2026</td>
-          </tr>
-
-          <tr>
-            <td>#CMP103</td>
-            <td>Neha Mehta</td>
-            <td>Street Light</td>
-            <td className="status pending">Pending</td>
-            <td>10 Aug 2026</td>
-          </tr>
+          {complaints.length === 0 ? (
+            <tr>
+              <td colSpan="5" style={{ textAlign: "center" }}>
+                No complaints found
+              </td>
+            </tr>
+          ) : (
+            complaints.map((c) => (
+              <tr key={c._id}>
+                <td>#{c._id.slice(-6)}</td>
+                <td>{c.user?.name || "Citizen"}</td>
+                <td>{c.type}</td>
+                <td className={`status ${c.status.toLowerCase()}`}>
+                  {c.status}
+                </td>
+                <td>
+                  {new Date(c.createdAt).toLocaleDateString()}
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

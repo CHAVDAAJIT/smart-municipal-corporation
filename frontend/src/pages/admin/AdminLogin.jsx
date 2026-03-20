@@ -38,7 +38,7 @@ function AdminLogin() {
         password: password,
       }
     );
-
+    localStorage.removeItem("userToken")
     localStorage.setItem("adminToken", res.data.token);
     alert("Admin Login Successful");
 

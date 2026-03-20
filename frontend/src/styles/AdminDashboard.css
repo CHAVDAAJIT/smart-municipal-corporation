@@ -206,6 +206,42 @@
   box-shadow: 0 14px 30px rgba(0,0,0,0.18);
 }
 
+.admin-dashboard-home h2 {
+  margin-bottom: 5px;
+}
+
+.admin-dashboard-home .sub-text {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+}
+
+.complaint-detail-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  max-width: 600px;
+}
+
+.complaint-detail-card p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.complaint-detail-card label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
 
 
 /* ================= MOBILE RESPONSIVE ================= */

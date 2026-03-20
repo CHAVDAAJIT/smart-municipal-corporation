@@ -1,22 +1,31 @@
+import { useNavigate } from "react-router-dom";
 import ServiceCard from "./ServiceCard";
+  
 
 function DashboardServices() {
+  const navigate = useNavigate();
   return (
     <div className="dashboard-services">
       <h3>City Services</h3>
 
       <div className="services-grid">
         <ServiceCard
-          title="Documents Service"
-          icon="📄"
-          description="Apply and download certificates"
-        />
+  title="Documents Service"
+  icon="📄"
+  description="Apply and download certificates"
+  onClick={() => navigate("/user/documents")}
+/>
 
-        <ServiceCard
-          title="Complaint Register"
-          icon="📝"
-          description="Register and track complaints"
-        />
+        <div className="services-grid">
+      <div
+        className="service-card"
+        onClick={() => navigate("/user/complaint/register")}
+      >
+        <h2>📝</h2>
+        <h4>Complaint Register</h4>
+        <p>Register and track complaints</p>
+      </div>
+    </div>
 
         <ServiceCard
           title="Property Tax"

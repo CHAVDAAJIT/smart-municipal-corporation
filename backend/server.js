@@ -8,6 +8,10 @@ const adminAuthRoutes = require("./routes/adminAuth");
 const adminProtectedRoutes = require("./routes/adminProtected");
 const app = express();
 
+const complaintRoutes = require("./routes/complaintRoutes");
+
+const documentRoutes = require("./routes/documentRoutes");
+
 // Enable CORS and JSON parsing before mounting routes
 app.use(cors());
 app.use(express.json());
@@ -17,7 +21,9 @@ app.use("/api/admin", adminProtectedRoutes);
 app.use("/api/admin", adminAuthRoutes);
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/userProtected"));
-
+app.use("/api/complaints", complaintRoutes);
+app.use("/api/admin", require("./routes/complaintRoutes"));
+app.use("/api/documents", documentRoutes);
 mongoose
   .connect("mongodb://127.0.0.1:27017/smartMunicipal")
   .then(() => console.log("MongoDB connected"))

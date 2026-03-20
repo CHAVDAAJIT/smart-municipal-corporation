@@ -5,7 +5,9 @@ function AdminSidebar() {
 
       <ul>
         <li>📊 Dashboard Overview</li>
-        <li>📝 Complaints Management</li>
+        <li onClick={() => window.location.href = "/admin/complaints"}>
+  📝 Complaints Management
+</li>
         <li>👥 Citizens Management</li>
         <li>🚛 Garbage Monitoring</li>
         <li>💧 Water Supply Control</li>
