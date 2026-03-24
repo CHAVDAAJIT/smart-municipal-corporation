@@ -17,7 +17,7 @@ function AdminStats() {
 
   const fetchAdminStats = async () => {
     try {
-      const res = await API.get("/admin/stats");
+       const res = await API.get("/complaints/admin-stats");
       setStats(res.data);
     } catch (err) {
       console.log("Admin stats error:", err);

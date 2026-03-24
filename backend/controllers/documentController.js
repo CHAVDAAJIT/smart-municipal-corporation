@@ -39,3 +39,15 @@ exports.updateStatus = async (req, res) => {
 
   res.json(doc);
 };
+
+// Admin - Get all document requests
+exports.getAllDocuments = async (req, res) => {
+  try {
+    const docs = await Document.find()
+      .populate("user", "name email mobile")
+      .sort({ createdAt: -1 });
+    res.json(docs);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

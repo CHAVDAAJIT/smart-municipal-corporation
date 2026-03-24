@@ -10,7 +10,12 @@ function AdminQuickActions() {
         <div className="admin-action-card">📢 Create Announcement</div>
         <div className="admin-action-card">📝 Assign Complaint</div>
         <div className="admin-action-card">👤 Add Admin</div>
-        <div className="admin-action-card">📄 Approve Certificates</div>
+        <div 
+          className="admin-action-card"
+          onClick={() => navigate("/admin/certificates")} 
+        >
+          📄 Approve Certificates
+        </div>
       </div>
     </div>
   );

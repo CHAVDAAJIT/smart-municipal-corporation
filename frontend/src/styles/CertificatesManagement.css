@@ -1,0 +1,220 @@
+/* FILTER TABS */
+.cert-filter-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cert-tab {
+  padding: 9px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 25px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cert-tab:hover {
+  border-color: #0f4c75;
+  color: #0f4c75;
+}
+
+.cert-tab.active {
+  background: #0f4c75;
+  color: white;
+  border-color: #0f4c75;
+}
+
+.cert-tab-count {
+  background: rgba(255,255,255,0.3);
+  padding: 1px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.cert-tab.active .cert-tab-count {
+  background: rgba(255,255,255,0.25);
+}
+
+/* TYPE BADGE */
+.cert-type-badge {
+  background: #e8f4fd;
+  color: #0f4c75;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* STATUS */
+.cert-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cert-status.pending {
+  background: #fff3cd;
+  color: #b08900;
+}
+
+.cert-status.approved {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.cert-status.rejected {
+  background: #ffe4e4;
+  color: #e63946;
+}
+
+/* VIEW BUTTON */
+.cert-view-btn {
+  background: #0f4c75;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.cert-view-btn:hover {
+  background: #083b5c;
+}
+
+/* MODAL */
+.cert-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.cert-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  width: 500px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+}
+
+.cert-modal h3 {
+  font-size: 18px;
+  color: #0f4c75;
+  margin-bottom: 12px;
+}
+
+.cert-modal hr {
+  border: none;
+  border-top: 1px solid #eee;
+  margin-bottom: 16px;
+}
+
+.cert-modal-info p {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.cert-modal-data {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.cert-modal-data h4 {
+  font-size: 14px;
+  color: #0f4c75;
+  margin-bottom: 12px;
+}
+
+.cert-data-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.cert-data-key {
+  font-weight: 600;
+  color: #555;
+  min-width: 130px;
+  text-transform: capitalize;
+}
+
+.cert-data-value {
+  color: #333;
+}
+
+/* ACTION BUTTONS */
+.cert-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cert-approve-btn {
+  flex: 1;
+  padding: 11px;
+  background: #059669;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cert-approve-btn:hover {
+  background: #047857;
+}
+
+.cert-reject-btn {
+  flex: 1;
+  padding: 11px;
+  background: #e63946;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cert-reject-btn:hover {
+  background: #c1121f;
+}
+
+.cert-close-btn {
+  width: 100%;
+  padding: 10px;
+  background: #f1f3f5;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cert-close-btn:hover {
+  background: #e2e5e8;
+}

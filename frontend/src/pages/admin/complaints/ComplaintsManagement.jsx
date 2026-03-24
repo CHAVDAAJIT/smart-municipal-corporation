@@ -14,7 +14,7 @@ function ComplaintsManagement() {
   // 🔹 Get all complaints (ADMIN)
   const fetchComplaints = async () => {
     try {
-      const res = await API.get("/complaints");
+      const res = await API.get("/complaints/all");
       setComplaints(res.data);
     } catch (err) {
       console.log(err);

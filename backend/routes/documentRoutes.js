@@ -6,6 +6,7 @@ const {
   createRequest,
   getUserDocs,
   updateStatus,
+  getAllDocuments,
 } = require("../controllers/documentController");
 
 const userAuth = require("../middleware/userAuth");
@@ -19,5 +20,6 @@ router.get("/", userAuth, getUserDocs);
 
 // Admin
 router.put("/:id/status", adminAuth, updateStatus);
+router.get("/all", adminAuth, getAllDocuments);
 
 module.exports = router;

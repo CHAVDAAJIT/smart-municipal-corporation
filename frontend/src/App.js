@@ -20,16 +20,19 @@ import AdminProtectedRoute from "./routes/AdminProtectedRoute";
 import UserProtectedRoute from "./routes/UserProtectedRoute";
 
 import Documents from "./pages/user/dashboard/Documents";
+import CertificatesManagement from "./pages/admin/CertificatesManagement";
 function AppContent() {
   const location = useLocation();
 
   // 🔥 NAVBAR HIDE RULE (FINAL)
   const hideNavbar =
-     location.pathname.startsWith("/user/dashboard") ||
+    location.pathname.startsWith("/user/dashboard") ||
     location.pathname.startsWith("/user/complaint") ||
     location.pathname.startsWith("/user/complaints") ||
+    location.pathname.startsWith("/user/documents") ||
     location.pathname.startsWith("/admin/dashboard") ||
-    location.pathname.startsWith("/admin/complaints");
+    location.pathname.startsWith("/admin/complaints") ||
+    location.pathname.startsWith("/admin/certificates");
 
   return (
     <>
@@ -108,6 +111,16 @@ function AppContent() {
             </AdminProtectedRoute>
           }
         />
+
+          <Route
+  path="/admin/certificates"
+  element={
+    <AdminProtectedRoute>
+      <CertificatesManagement />
+    </AdminProtectedRoute>
+  }
+/>
+
       </Routes>
     </>
   );

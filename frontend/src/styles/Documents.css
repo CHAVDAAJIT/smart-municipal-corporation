@@ -1,78 +1,121 @@
-/* Wrapper */
-.doc-page {
-  background: #f1f3f6;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Card */
+.doc-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f4c75 0%, #1b6ca8 50%, #2196f3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
 .doc-card {
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   background: #ffffff;
-  padding: 28px;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 36px 32px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
 }
 
-/* Title */
+/* Header */
 .doc-card h2 {
-  margin: 0;
-  font-size: 22px;
-  color: #1f2937;
+  font-size: 24px;
+  color: #0f4c75;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
-/* Subtitle */
 .doc-card .subtitle {
-  font-size: 14px;
-  color: #6b7280;
-  margin-bottom: 18px;
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 22px;
 }
 
-/* Inputs */
-.doc-card input,
-.doc-card select {
+/* Divider */
+.doc-card h2::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #1b6ca8;
+  border-radius: 2px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+/* Select & Inputs */
+.doc-card select,
+.doc-card input {
   width: 100%;
-  padding: 11px;
+  padding: 12px 15px;
   margin-top: 12px;
-  border: 1px solid #d1d5db;
+  border: 1.5px solid #e0e0e0;
   border-radius: 10px;
   font-size: 14px;
-  background: #fafafa;
-  transition: all 0.2s ease;
-}
-
-/* Focus */
-.doc-card input:focus,
-.doc-card select:focus {
+  color: #333;
+  background: #f9fbff;
+  transition: border 0.2s, box-shadow 0.2s;
   outline: none;
-  border-color: #2563eb;
-  background: #ffffff;
 }
 
-/* File input */
+.doc-card select:focus,
+.doc-card input:focus {
+  border-color: #1b6ca8;
+  box-shadow: 0 0 0 3px rgba(27, 108, 168, 0.12);
+  background: #fff;
+}
+
+/* Section label */
+.doc-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1b6ca8;
+  margin-top: 20px;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* File Upload */
 .doc-card input[type="file"] {
-  background: #ffffff;
-  padding: 8px;
+  background: #f0f7ff;
+  border: 1.5px dashed #1b6ca8;
+  color: #555;
+  cursor: pointer;
+  padding: 10px;
 }
 
-/* Button */
+/* Submit Button */
 .doc-card button {
   width: 100%;
-  margin-top: 18px;
-  padding: 12px;
-  background: #1e4f73;
+  margin-top: 22px;
+  padding: 13px;
+  background: linear-gradient(135deg, #0f4c75, #1b6ca8);
   color: white;
   border: none;
   border-radius: 10px;
   font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
 }
 
-/* Hover */
 .doc-card button:hover {
-  background: #163d5a;
+  background: linear-gradient(135deg, #0a3a5c, #155d8f);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 76, 117, 0.35);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .doc-card {
+    padding: 24px 18px;
+  }
 }

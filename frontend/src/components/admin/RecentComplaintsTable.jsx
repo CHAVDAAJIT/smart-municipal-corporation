@@ -11,7 +11,7 @@ function RecentComplaintsTable() {
 
   const fetchRecentComplaints = async () => {
     try {
-      const res = await API.get("/complaints");
+      const res = await API.get("/complaints/all");
       // latest 5 complaints only
       setComplaints(res.data.slice(0, 5));
     } catch (err) {
