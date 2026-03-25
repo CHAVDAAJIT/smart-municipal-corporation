@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import API from "../../../services/apiUser";
+import DashboardSidebar from "../../../components/user/DashboardSidebar";
+import DashboardHeader from "../../../components/user/DashboardHeader";
 import "../../../styles/Complaint.css";
+import "../../../styles/UserDashboard.css";
 
 function MyComplaints() {
   const [complaints, setComplaints] = useState([]);
@@ -19,36 +22,58 @@ function MyComplaints() {
   };
 
   return (
-    <div className="complaint-page">
-      <div className="complaint-card wide">
-        <h2>My Complaints</h2>
-        <p className="sub-text">Track your complaint status</p>
+    <div className="dashboard-container">
+      <DashboardSidebar />
 
-        <table className="complaint-table">
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Area</th>
-              <th>Status</th>
-              <th>Department</th>
-            </tr>
-          </thead>
+      <div className="dashboard-main">
+        <DashboardHeader />
 
-          <tbody>
-            {complaints.map((c) => (
-              <tr key={c._id}>
-                <td>{c.type}</td>
-                <td>{c.area}</td>
-                <td>
-                  <span className={`status ${c.status.toLowerCase()}`}>
-                    {c.status}
-                  </span>
-                </td>
-                <td>{c.department || "-"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="dashboard-home">
+          <h2>My Complaints</h2>
+          <p className="sub-text">Track your complaint status</p>
+
+          <div className="complaint-card wide">
+            <table className="complaint-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Type</th>
+                  <th>Area</th>
+                  <th>Description</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {complaints.length === 0 ? (
+                  <tr>
+                    <td colSpan="7" style={{ textAlign: "center", padding: "20px", color: "#888" }}>
+                      No complaints found
+                    </td>
+                  </tr>
+                ) : (
+                  complaints.map((c, index) => (
+                    <tr key={c._id}>
+                      <td>{index + 1}</td>
+                      <td>{c.type}</td>
+                      <td>{c.area}</td>
+                      <td>{c.description}</td>
+                      <td>{c.department || "-"}</td>
+                      <td>
+                        <span className={`status ${c.status.toLowerCase()}`}>
+                          {c.status}
+                        </span>
+                      </td>
+                      <td>{new Date(c.createdAt).toLocaleDateString("en-IN")}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

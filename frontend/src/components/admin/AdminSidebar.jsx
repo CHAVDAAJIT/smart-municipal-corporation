@@ -1,22 +1,42 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import "../../styles/AdminSidebar.css";
 
 function AdminSidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const menu = [
+    { label: "Dashboard Overview", icon: "📊", path: "/admin/dashboard" },
+    { label: "Complaints Management", icon: "📝", path: "/admin/complaints" },
+    { label: "Citizens Management", icon: "👥", path: "/admin/citizens" },
+    { label: "Garbage Monitoring", icon: "🚛", path: "/admin/garbage" },
+    { label: "Water Supply Control", icon: "💧", path: "/admin/water" },
+    { label: "Announcements", icon: "📢", path: "/admin/announcements" },
+    { label: "Property Tax", icon: "🏠", path: "/admin/property-tax" },
+    { label: "Certificates", icon: "📄", path: "/admin/certificates" },
+    { label: "Reports & Analytics", icon: "📈", path: "/admin/reports" },
+    { label: "Settings", icon: "⚙️", path: "/admin/settings" },
+  ];
 
   return (
     <div className="admin-sidebar">
-      <h3>Smart City</h3>
+      <div className="admin-sidebar-title">
+        🏙️ Smart City
+      </div>
       <ul>
-        <li onClick={() => navigate("/admin/dashboard")}>📊 Dashboard Overview</li>
-        <li onClick={() => navigate("/admin/complaints")}>📝 Complaints Management</li>
-        <li>👥 Citizens Management</li>
-        <li>🚛 Garbage Monitoring</li>
-        <li>💧 Water Supply Control</li>
-        <li>📢 Announcements</li>
-        <li>🏠 Property Tax</li>
-        <li onClick={() => navigate("/admin/certificates")}>📄 Certificates</li> {/* ✅ */}
-        <li>📈 Reports & Analytics</li>
-        <li>⚙️ Settings</li>
+        {menu.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <li
+              key={item.path}
+              className={`admin-sidebar-item ${isActive ? "active" : ""}`}
+              onClick={() => navigate(item.path)}
+            >
+              <span className="admin-sidebar-icon">{item.icon}</span>
+              {item.label}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

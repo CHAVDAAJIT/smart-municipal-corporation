@@ -121,3 +121,11 @@
     white-space: nowrap;
   }
 }
+
+/* Register Complaint center */
+.complaint-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 70px);
+}

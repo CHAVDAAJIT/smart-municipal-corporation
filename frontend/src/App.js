@@ -21,6 +21,8 @@ import UserProtectedRoute from "./routes/UserProtectedRoute";
 
 import Documents from "./pages/user/dashboard/Documents";
 import CertificatesManagement from "./pages/admin/CertificatesManagement";
+import MyCertificates from "./pages/user/dashboard/MyCertificates";
+
 function AppContent() {
   const location = useLocation();
 
@@ -28,6 +30,7 @@ function AppContent() {
   const hideNavbar =
     location.pathname.startsWith("/user/dashboard") ||
     location.pathname.startsWith("/user/complaint") ||
+    location.pathname.startsWith("/user/my-certificates") ||
     location.pathname.startsWith("/user/complaints") ||
     location.pathname.startsWith("/user/documents") ||
     location.pathname.startsWith("/admin/dashboard") ||
@@ -74,6 +77,16 @@ function AppContent() {
             </UserProtectedRoute>
           }
         />
+
+
+        <Route
+  path="/user/my-certificates"
+  element={
+    <UserProtectedRoute>
+      <MyCertificates />
+    </UserProtectedRoute>
+  }
+/>
 
         <Route
   path="/user/documents"
