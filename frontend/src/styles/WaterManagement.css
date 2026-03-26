@@ -1,0 +1,323 @@
+.water-page {
+  padding: 25px;
+}
+
+.water-page h2 {
+  font-size: 22px;
+  color: #0f4c75;
+  margin-bottom: 4px;
+}
+
+/* Stats */
+.water-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.water-stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+}
+
+.water-stat-icon {
+  font-size: 28px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #e8f4fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.water-stat-card h4 {
+  margin: 0 0 2px;
+  font-size: 20px;
+  color: #0f4c75;
+  font-weight: 700;
+}
+
+.water-stat-card p {
+  margin: 0;
+  font-size: 12px;
+  color: #888;
+}
+
+/* Info Grid */
+.water-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.water-info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+}
+
+.water-info-card h3 {
+  font-size: 15px;
+  color: #0f4c75;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.schedule-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f4f6f8;
+  font-size: 13px;
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+.schedule-area {
+  color: #333;
+  font-weight: 500;
+}
+
+.schedule-time {
+  color: #1b6ca8;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.outage-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f4f6f8;
+  font-size: 13px;
+}
+
+.outage-item:last-child {
+  border-bottom: none;
+}
+
+.outage-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e63946;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.outage-dot.resolved {
+  background: #059669;
+}
+
+.outage-area {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.outage-time {
+  font-size: 11px;
+  color: #888;
+}
+
+/* Bill Info */
+.bill-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 13px;
+  border-bottom: 1px solid #f4f6f8;
+}
+
+.bill-row:last-child {
+  border-bottom: none;
+  font-weight: 700;
+  color: #0f4c75;
+}
+
+.bill-label {
+  color: #666;
+}
+
+/* Request Form */
+.water-request-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.water-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+}
+
+.water-form-card h3 {
+  font-size: 15px;
+  color: #0f4c75;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.water-form-card input,
+.water-form-card select,
+.water-form-card textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.water-form-card input:focus,
+.water-form-card select:focus,
+.water-form-card textarea:focus {
+  border-color: #1b6ca8;
+}
+
+.water-form-card textarea {
+  resize: none;
+  height: 80px;
+}
+
+.water-submit-btn {
+  width: 100%;
+  padding: 11px;
+  background: #0f4c75;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.water-submit-btn:hover {
+  background: #083b5c;
+}
+
+/* My Requests */
+.water-requests-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+}
+
+.water-requests-card h3 {
+  font-size: 15px;
+  color: #0f4c75;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.water-request-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f4f6f8;
+}
+
+.water-request-item:last-child {
+  border-bottom: none;
+}
+
+.water-request-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.water-request-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #e8f4fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.water-request-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 2px;
+}
+
+.water-request-date {
+  font-size: 11px;
+  color: #888;
+  margin: 0;
+}
+
+.water-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.water-badge.pending {
+  background: #fff3cd;
+  color: #b08900;
+}
+
+.water-badge.approved {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.water-badge.rejected {
+  background: #ffe4e4;
+  color: #e63946;
+}
+
+.water-badge.resolved {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.water-empty {
+  text-align: center;
+  padding: 20px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.success-msg {
+  color: green;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 8px;
+}

@@ -23,6 +23,9 @@ import Documents from "./pages/user/dashboard/Documents";
 import CertificatesManagement from "./pages/admin/CertificatesManagement";
 import MyCertificates from "./pages/user/dashboard/MyCertificates";
 
+import WaterManagement from "./pages/user/dashboard/WaterManagement";
+import AdminWaterManagement from "./pages/admin/WaterManagement";
+
 function AppContent() {
   const location = useLocation();
 
@@ -35,6 +38,8 @@ function AppContent() {
     location.pathname.startsWith("/user/documents") ||
     location.pathname.startsWith("/admin/dashboard") ||
     location.pathname.startsWith("/admin/complaints") ||
+    location.pathname.startsWith("/user/water") ||
+    location.pathname.startsWith("/admin/water") ||
     location.pathname.startsWith("/admin/certificates");
 
   return (
@@ -97,6 +102,15 @@ function AppContent() {
   }
 />
 
+<Route
+  path="/user/water"
+  element={
+    <UserProtectedRoute>
+      <WaterManagement />
+    </UserProtectedRoute>
+  }
+/>
+
         {/* ADMIN */}
         <Route
           path="/admin/dashboard"
@@ -130,6 +144,15 @@ function AppContent() {
   element={
     <AdminProtectedRoute>
       <CertificatesManagement />
+    </AdminProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/water"
+  element={
+    <AdminProtectedRoute>
+      <AdminWaterManagement />
     </AdminProtectedRoute>
   }
 />
