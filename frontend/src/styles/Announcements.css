@@ -1,0 +1,251 @@
+.announce-page {
+  padding: 25px;
+}
+
+.announce-page h2 {
+  font-size: 22px;
+  color: #0f4c75;
+  margin-bottom: 4px;
+}
+
+/* Filter Tabs */
+.announce-filter-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.announce-tab {
+  padding: 7px 16px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 25px;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: #555;
+}
+
+.announce-tab:hover {
+  border-color: #0f4c75;
+  color: #0f4c75;
+}
+
+.announce-tab.active {
+  background: #0f4c75;
+  color: white;
+  border-color: #0f4c75;
+}
+
+/* Cards Grid */
+.announce-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.announce-card {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+  border-left: 4px solid #1b6ca8;
+  transition: box-shadow 0.2s ease;
+}
+
+.announce-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.announce-card.high {
+  border-left-color: #e63946;
+}
+
+.announce-card.medium {
+  border-left-color: #f57c00;
+}
+
+.announce-card.low {
+  border-left-color: #059669;
+}
+
+.announce-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.announce-card-header h4 {
+  font-size: 15px;
+  color: #0f4c75;
+  margin: 0;
+  font-weight: 600;
+}
+
+.announce-priority {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.announce-priority.high {
+  background: #ffe4e4;
+  color: #e63946;
+}
+
+.announce-priority.medium {
+  background: #fff3cd;
+  color: #b08900;
+}
+
+.announce-priority.low {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.announce-card p {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.announce-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.announce-category {
+  font-size: 12px;
+  color: #1b6ca8;
+  background: #e8f4fd;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.announce-date {
+  font-size: 11px;
+  color: #aaa;
+}
+
+.announce-empty {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+  font-size: 14px;
+  background: white;
+  border-radius: 12px;
+}
+
+/* Admin Form */
+.announce-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+  margin-bottom: 24px;
+}
+
+.announce-form-card h3 {
+  font-size: 16px;
+  color: #0f4c75;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.announce-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.announce-form-card input,
+.announce-form-card select,
+.announce-form-card textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.announce-form-card input:focus,
+.announce-form-card select:focus,
+.announce-form-card textarea:focus {
+  border-color: #1b6ca8;
+}
+
+.announce-form-card textarea {
+  resize: none;
+  height: 80px;
+  grid-column: 1 / -1;
+}
+
+.announce-submit-btn {
+  padding: 10px 24px;
+  background: #0f4c75;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.announce-submit-btn:hover {
+  background: #083b5c;
+}
+
+/* Admin Table Actions */
+.announce-action-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.announce-toggle-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.announce-toggle-btn.active {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.announce-toggle-btn.inactive {
+  background: #ffe4e4;
+  color: #e63946;
+}
+
+.announce-delete-btn {
+  padding: 5px 10px;
+  background: #ffe4e4;
+  color: #e63946;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.announce-delete-btn:hover {
+  background: #ffcccc;
+}

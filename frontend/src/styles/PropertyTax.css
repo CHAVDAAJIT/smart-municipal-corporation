@@ -1,0 +1,314 @@
+.property-page {
+  padding: 25px;
+}
+
+.property-page h2 {
+  font-size: 22px;
+  color: #0f4c75;
+  margin-bottom: 4px;
+}
+
+/* Search */
+.property-search-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+  margin-bottom: 24px;
+}
+
+.property-search-card h3 {
+  font-size: 15px;
+  color: #0f4c75;
+  margin-bottom: 14px;
+}
+
+.property-search-row {
+  display: flex;
+  gap: 12px;
+}
+
+.property-search-row input {
+  flex: 1;
+  padding: 11px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.property-search-row input:focus {
+  border-color: #1b6ca8;
+}
+
+.property-search-btn {
+  padding: 11px 24px;
+  background: #0f4c75;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.property-search-btn:hover {
+  background: #083b5c;
+}
+
+.property-not-found {
+  text-align: center;
+  padding: 16px;
+  color: #e63946;
+  font-size: 13px;
+  background: #ffe4e4;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+/* Property Detail */
+.property-detail-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+  margin-bottom: 24px;
+}
+
+.property-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.property-detail-header h3 {
+  font-size: 18px;
+  color: #0f4c75;
+  margin: 0 0 4px;
+}
+
+.property-detail-header p {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+.property-status-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.property-status-badge.paid {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.property-status-badge.unpaid {
+  background: #ffe4e4;
+  color: #e63946;
+}
+
+.property-status-badge.partial {
+  background: #fff3cd;
+  color: #b08900;
+}
+
+.property-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.property-info-item {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.property-info-label {
+  font-size: 11px;
+  color: #888;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.property-info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.property-tax-amount {
+  background: #e8f4fd;
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.property-tax-amount h4 {
+  margin: 0;
+  font-size: 14px;
+  color: #0f4c75;
+}
+
+.property-tax-amount span {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f4c75;
+}
+
+.property-pay-btn {
+  width: 100%;
+  padding: 13px;
+  background: #059669;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.property-pay-btn:hover {
+  background: #047857;
+}
+
+.property-pay-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* Payment History */
+.property-history-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+}
+
+.property-history-card h3 {
+  font-size: 15px;
+  color: #0f4c75;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.property-history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f4f6f8;
+}
+
+.property-history-item:last-child {
+  border-bottom: none;
+}
+
+.property-history-left p {
+  margin: 0;
+}
+
+.property-history-amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: #059669;
+}
+
+.property-history-receipt {
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px !important;
+}
+
+.property-history-date {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.property-empty {
+  text-align: center;
+  padding: 20px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+/* Admin Form */
+.property-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+  margin-bottom: 24px;
+}
+
+.property-form-card h3 {
+  font-size: 16px;
+  color: #0f4c75;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.property-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.property-form-card input,
+.property-form-card select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.property-form-card input:focus,
+.property-form-card select:focus {
+  border-color: #1b6ca8;
+}
+
+.property-form-full {
+  grid-column: 1 / -1;
+}
+
+.property-add-btn {
+  padding: 10px 24px;
+  background: #0f4c75;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.property-add-btn:hover {
+  background: #083b5c;
+}

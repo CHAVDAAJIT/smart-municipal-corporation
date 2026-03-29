@@ -26,6 +26,15 @@ import MyCertificates from "./pages/user/dashboard/MyCertificates";
 import WaterManagement from "./pages/user/dashboard/WaterManagement";
 import AdminWaterManagement from "./pages/admin/WaterManagement";
 
+import AdminAnnouncements from "./pages/admin/Announcements";
+import Announcements from "./pages/user/dashboard/Announcements";
+
+import GarbageTracking from "./pages/user/dashboard/GarbageTracking";
+import GarbageMonitoring from "./pages/admin/GarbageMonitoring";
+
+import PropertyTax from "./pages/user/dashboard/PropertyTax";
+import AdminPropertyTax from "./pages/admin/PropertyTax";
+
 function AppContent() {
   const location = useLocation();
 
@@ -40,6 +49,12 @@ function AppContent() {
     location.pathname.startsWith("/admin/complaints") ||
     location.pathname.startsWith("/user/water") ||
     location.pathname.startsWith("/admin/water") ||
+    location.pathname.startsWith("/admin/announcements") ||
+    location.pathname.startsWith("/user/events") ||
+    location.pathname.startsWith("/user/garbage") ||
+    location.pathname.startsWith("/admin/garbage") ||
+    location.pathname.startsWith("/user/property-tax") ||
+    location.pathname.startsWith("/admin/property-tax") ||
     location.pathname.startsWith("/admin/certificates");
 
   return (
@@ -111,6 +126,33 @@ function AppContent() {
   }
 />
 
+<Route
+  path="/user/events"
+  element={
+    <UserProtectedRoute>
+      <Announcements />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route
+  path="/user/garbage"
+  element={
+    <UserProtectedRoute>
+      <GarbageTracking />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route
+  path="/user/property-tax"
+  element={
+    <UserProtectedRoute>
+      <PropertyTax />
+    </UserProtectedRoute>
+  }
+/>
+
         {/* ADMIN */}
         <Route
           path="/admin/dashboard"
@@ -156,6 +198,34 @@ function AppContent() {
     </AdminProtectedRoute>
   }
 />
+
+<Route
+  path="/admin/announcements"
+  element={
+    <AdminProtectedRoute>
+      <AdminAnnouncements />
+    </AdminProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/garbage"
+  element={
+    <AdminProtectedRoute>
+      <GarbageMonitoring />
+    </AdminProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/property-tax"
+  element={
+    <AdminProtectedRoute>
+      <AdminPropertyTax />
+    </AdminProtectedRoute>
+  }
+/>
+
 
       </Routes>
     </>

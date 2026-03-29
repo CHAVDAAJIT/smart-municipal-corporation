@@ -14,6 +14,12 @@ const documentRoutes = require("./routes/documentRoutes");
 
 const waterRoutes = require("./routes/waterRoutes");
 
+const announcementRoutes = require("./routes/announcementRoutes");
+
+const garbageRoutes = require("./routes/garbageRoutes");
+
+const propertyRoutes = require("./routes/propertyRoutes");
+
 // Enable CORS and JSON parsing before mounting routes
 app.use(cors());
 app.use(express.json());
@@ -27,6 +33,10 @@ app.use("/api/complaints", complaintRoutes);
 app.use("/api/admin", require("./routes/complaintRoutes"));
 app.use("/api/documents", documentRoutes);
 app.use("/api/water", waterRoutes);
+app.use("/api/announcements", announcementRoutes);
+app.use("/api/garbage", garbageRoutes);
+app.use("/api/property", propertyRoutes);
+
 mongoose
   .connect("mongodb://127.0.0.1:27017/smartMunicipal")
   .then(() => console.log("MongoDB connected"))
