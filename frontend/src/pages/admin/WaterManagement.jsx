@@ -13,7 +13,7 @@ function AdminWaterManagement() {
 
   const [schedule, setSchedule] = useState([]);
   const [outages, setOutages] = useState([]);
-  const [bill, setBill] = useState(null);
+  const [, setBill] = useState(null);
 
   const [scheduleForm, setScheduleForm] = useState({ area: "", time: "" });
   const [outageForm, setOutageForm] = useState({ area: "", reason: "", time: "" });

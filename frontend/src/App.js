@@ -31,9 +31,11 @@ import Announcements from "./pages/user/dashboard/Announcements";
 
 import GarbageTracking from "./pages/user/dashboard/GarbageTracking";
 import GarbageMonitoring from "./pages/admin/GarbageMonitoring";
-
+import Settings from "./pages/admin/Settings";
 import PropertyTax from "./pages/user/dashboard/PropertyTax";
 import AdminPropertyTax from "./pages/admin/PropertyTax";
+import Reports from "./pages/admin/Reports";
+import CitizensManagement from "./pages/admin/CitizensManagement";
 
 function AppContent() {
   const location = useLocation();
@@ -55,6 +57,9 @@ function AppContent() {
     location.pathname.startsWith("/admin/garbage") ||
     location.pathname.startsWith("/user/property-tax") ||
     location.pathname.startsWith("/admin/property-tax") ||
+    location.pathname.startsWith("/admin/citizens") ||
+    location.pathname.startsWith("/admin/reports") ||
+    location.pathname.startsWith("/admin/settings") ||
     location.pathname.startsWith("/admin/certificates");
 
   return (
@@ -222,6 +227,31 @@ function AppContent() {
   element={
     <AdminProtectedRoute>
       <AdminPropertyTax />
+    </AdminProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/citizens"
+  element={
+    <AdminProtectedRoute>
+      <CitizensManagement />
+    </AdminProtectedRoute>
+  }
+/>
+<Route
+  path="/admin/reports"
+  element={
+    <AdminProtectedRoute>
+      <Reports />
+    </AdminProtectedRoute>
+  }
+/>
+<Route
+  path="/admin/settings"
+  element={
+    <AdminProtectedRoute>
+      <Settings />
     </AdminProtectedRoute>
   }
 />

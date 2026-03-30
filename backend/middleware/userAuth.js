@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -15,11 +16,16 @@ module.exports = (req, res, next) => {
       return res.status(403).json({ message: "Access denied" });
     }
 
-    req.user = decoded; 
-    req.user = {
-      id: decoded.id,
-      role: decoded.role
-    };  
+    
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (user.isBlocked) {
+      return res.status(403).json({ message: "Your account has been blocked. Contact admin." });
+    }
+
+    req.user = { id: decoded.id, role: decoded.role };
     next();
   } catch (err) {
     return res.status(401).json({ message: "Invalid token" });

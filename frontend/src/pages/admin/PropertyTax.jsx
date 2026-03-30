@@ -69,7 +69,7 @@ function AdminPropertyTax() {
     ? properties
     : properties.filter(p => p.paymentStatus === filter);
 
-  const totalTax = properties.reduce((sum, p) => sum + p.taxAmount, 0);
+  //const totalTax = properties.reduce((sum, p) => sum + p.taxAmount, 0);
   const paidTax = properties
     .filter(p => p.paymentStatus === "Paid")
     .reduce((sum, p) => sum + p.taxAmount, 0);
