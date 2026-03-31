@@ -15,9 +15,9 @@ const documentRoutes = require("./routes/documentRoutes");
 const waterRoutes = require("./routes/waterRoutes");
 
 const announcementRoutes = require("./routes/announcementRoutes");
-
+const notificationRoutes = require("./routes/notificationRoutes");
 const garbageRoutes = require("./routes/garbageRoutes");
-
+const cityUpdateRoutes = require("./routes/cityUpdateRoutes");
 const propertyRoutes = require("./routes/propertyRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
 const citizenRoutes = require("./routes/citizenRoutes");
@@ -41,6 +41,8 @@ app.use("/api/property", propertyRoutes);
 app.use("/api/citizens", citizenRoutes);
 app.use("/api/reports", reportsRoutes);
 app.use("/api/settings", settingsRoutes);
+app.use("/api/city-updates", cityUpdateRoutes);
+app.use("/api/notifications", notificationRoutes);
 mongoose
   .connect("mongodb://127.0.0.1:27017/smartMunicipal")
   .then(() => console.log("MongoDB connected"))

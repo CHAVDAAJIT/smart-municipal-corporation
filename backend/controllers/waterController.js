@@ -4,7 +4,7 @@ const {
   Outage,
   BillInfo
 } = require("../models/waterManagement");
-
+const { createNotification } = require("./notificationController");
 /* ===== USER ===== */
 
 exports.createRequest = async (req, res) => {
@@ -56,18 +56,31 @@ exports.getAllRequests = async (req, res) => {
   }
 };
 
+
+
 exports.updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
     const request = await Water.findByIdAndUpdate(
-      req.params.id, { status }, { new: true }
+      req.params.id,
+      { status },
+      { new: true }
     );
+
+    // ✅ Notification create karo
+    await createNotification(
+      request.user,
+      "Water Request Updated",
+      `Your ${request.type} request status changed to "${status}"`,
+      "water",
+      "/user/water"
+    );
+
     res.json({ message: "Status updated", request });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 // Schedule CRUD
 exports.getSchedule = async (req, res) => {
   try {

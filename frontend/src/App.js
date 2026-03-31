@@ -28,6 +28,8 @@ import AdminWaterManagement from "./pages/admin/WaterManagement";
 
 import AdminAnnouncements from "./pages/admin/Announcements";
 import Announcements from "./pages/user/dashboard/Announcements";
+import Notifications from "./pages/user/dashboard/Notifications";
+import AboutCorporation from "./pages/user/dashboard/AboutCorporation";
 
 import GarbageTracking from "./pages/user/dashboard/GarbageTracking";
 import GarbageMonitoring from "./pages/admin/GarbageMonitoring";
@@ -36,7 +38,8 @@ import PropertyTax from "./pages/user/dashboard/PropertyTax";
 import AdminPropertyTax from "./pages/admin/PropertyTax";
 import Reports from "./pages/admin/Reports";
 import CitizensManagement from "./pages/admin/CitizensManagement";
-
+import CityUpdates from "./pages/user/dashboard/CityUpdates";
+import AdminCityUpdates from "./pages/admin/CityUpdates";
 function AppContent() {
   const location = useLocation();
 
@@ -60,6 +63,10 @@ function AppContent() {
     location.pathname.startsWith("/admin/citizens") ||
     location.pathname.startsWith("/admin/reports") ||
     location.pathname.startsWith("/admin/settings") ||
+    location.pathname.startsWith("/user/updates") ||
+location.pathname.startsWith("/admin/city-updates") ||
+location.pathname.startsWith("/user/notifications") ||
+location.pathname.startsWith("/user/about") ||
     location.pathname.startsWith("/admin/certificates");
 
   return (
@@ -158,6 +165,33 @@ function AppContent() {
   }
 />
 
+<Route
+  path="/user/updates"
+  element={
+    <UserProtectedRoute>
+      <CityUpdates />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route
+  path="/user/notifications"
+  element={
+    <UserProtectedRoute>
+      <Notifications />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route
+  path="/user/about"
+  element={
+    <UserProtectedRoute>
+      <AboutCorporation />
+    </UserProtectedRoute>
+  }
+/>
+
         {/* ADMIN */}
         <Route
           path="/admin/dashboard"
@@ -252,6 +286,15 @@ function AppContent() {
   element={
     <AdminProtectedRoute>
       <Settings />
+    </AdminProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/city-updates"
+  element={
+    <AdminProtectedRoute>
+      <AdminCityUpdates />
     </AdminProtectedRoute>
   }
 />

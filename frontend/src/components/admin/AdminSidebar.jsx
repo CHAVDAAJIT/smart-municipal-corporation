@@ -12,6 +12,7 @@ function AdminSidebar() {
     { label: "Garbage Monitoring", icon: "🚛", path: "/admin/garbage" },
     { label: "Water Supply Control", icon: "💧", path: "/admin/water" },
     { label: "Announcements", icon: "📢", path: "/admin/announcements" },
+    { label: "City Updates", icon: "🏙️", path: "/admin/city-updates" },
     { label: "Property Tax", icon: "🏠", path: "/admin/property-tax" },
     { label: "Certificates", icon: "📄", path: "/admin/certificates" },
     { label: "Reports & Analytics", icon: "📈", path: "/admin/reports" },

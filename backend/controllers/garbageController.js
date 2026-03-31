@@ -1,5 +1,5 @@
 const { GarbageComplaint, GarbageTruck } = require("../models/garbage");
-
+const { createNotification } = require("./notificationController");
 /* ===== USER ===== */
 exports.createComplaint = async (req, res) => {
   try {
@@ -47,12 +47,26 @@ exports.getAllComplaints = async (req, res) => {
   }
 };
 
+
+
 exports.updateComplaintStatus = async (req, res) => {
   try {
     const { status } = req.body;
     const complaint = await GarbageComplaint.findByIdAndUpdate(
-      req.params.id, { status }, { new: true }
+      req.params.id,
+      { status },
+      { new: true }
     );
+
+    // ✅ Notification create karo
+    await createNotification(
+      complaint.user,
+      "Garbage Complaint Updated",
+      `Your garbage complaint status changed to "${status}"`,
+      "garbage",
+      "/user/garbage"
+    );
+
     res.json({ message: "Status updated", complaint });
   } catch (err) {
     res.status(500).json({ message: "Server error" });

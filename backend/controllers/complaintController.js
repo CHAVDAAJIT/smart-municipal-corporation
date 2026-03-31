@@ -1,6 +1,6 @@
 const Complaint = require("../models/Complaint");
 const User = require("../models/user");
-
+const { createNotification } = require("./notificationController");
 /* ================= USER ================= */
 
 // Register complaint
@@ -78,6 +78,9 @@ exports.assignDepartment = async (req, res) => {
 };
 
 // Update status
+
+
+
 exports.updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
@@ -88,15 +91,20 @@ exports.updateStatus = async (req, res) => {
       { new: true }
     );
 
-    res.json({
-      message: "Status updated",
-      complaint
-    });
+    // ✅ Notification create karo
+    await createNotification(
+      complaint.user,
+      "Complaint Status Updated",
+      `Your complaint (#${complaint._id.toString().slice(-6)}) status changed to "${status}"`,
+      "complaint",
+      "/user/complaints"
+    );
+
+    res.json({ message: "Status updated", complaint });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 // Get complaint detail
 exports.getComplaintById = async (req, res) => {
   try {

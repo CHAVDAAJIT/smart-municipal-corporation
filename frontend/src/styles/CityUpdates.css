@@ -1,0 +1,226 @@
+.cityupdate-page {
+  padding: 25px;
+}
+
+.cityupdate-page h2 {
+  font-size: 22px;
+  color: #0f4c75;
+  margin-bottom: 4px;
+}
+
+/* Search + Filter Bar */
+.cityupdate-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cityupdate-search {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.cityupdate-search:focus {
+  border-color: #1b6ca8;
+}
+
+/* Filter Tabs */
+.cityupdate-filter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.cityupdate-tab {
+  padding: 7px 16px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 25px;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: #555;
+}
+
+.cityupdate-tab:hover {
+  border-color: #0f4c75;
+  color: #0f4c75;
+}
+
+.cityupdate-tab.active {
+  background: #0f4c75;
+  color: white;
+  border-color: #0f4c75;
+}
+
+/* Sort */
+.cityupdate-sort {
+  padding: 9px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  color: #555;
+  background: white;
+}
+
+/* Cards Grid */
+.cityupdate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.cityupdate-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  border: 1px solid #eef2f7;
+  transition: all 0.2s ease;
+}
+
+.cityupdate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.cityupdate-card-banner {
+  height: 8px;
+}
+
+.cityupdate-card-banner.road { background: #e63946; }
+.cityupdate-card-banner.water { background: #1b6ca8; }
+.cityupdate-card-banner.park { background: #059669; }
+.cityupdate-card-banner.event { background: #f57c00; }
+.cityupdate-card-banner.infrastructure { background: #7c3aed; }
+.cityupdate-card-banner.general { background: #888; }
+
+.cityupdate-card-body {
+  padding: 18px 20px;
+}
+
+.cityupdate-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cityupdate-category {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.cityupdate-category.road { background: #ffe4e4; color: #e63946; }
+.cityupdate-category.water { background: #e8f4fd; color: #1b6ca8; }
+.cityupdate-category.park { background: #d1fae5; color: #059669; }
+.cityupdate-category.event { background: #fff3cd; color: #b08900; }
+.cityupdate-category.infrastructure { background: #ede9fe; color: #7c3aed; }
+.cityupdate-category.general { background: #f4f6f8; color: #555; }
+
+.cityupdate-date {
+  font-size: 11px;
+  color: #aaa;
+}
+
+.cityupdate-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f4c75;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.cityupdate-card-desc {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+  /* display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; */
+  overflow: hidden;
+  max-height: 63px;
+}
+
+.cityupdate-empty {
+  text-align: center;
+  padding: 50px;
+  color: #aaa;
+  font-size: 14px;
+  background: white;
+  border-radius: 12px;
+  grid-column: 1 / -1;
+}
+
+/* Admin Form */
+.cityupdate-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+  margin-bottom: 24px;
+}
+
+.cityupdate-form-card h3 {
+  font-size: 16px;
+  color: #0f4c75;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.cityupdate-form-card input,
+.cityupdate-form-card select,
+.cityupdate-form-card textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.cityupdate-form-card input:focus,
+.cityupdate-form-card select:focus,
+.cityupdate-form-card textarea:focus {
+  border-color: #1b6ca8;
+}
+
+.cityupdate-form-card textarea {
+  resize: none;
+  height: 90px;
+}
+
+.cityupdate-submit-btn {
+  padding: 10px 24px;
+  background: #0f4c75;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cityupdate-submit-btn:hover {
+  background: #083b5c;
+}

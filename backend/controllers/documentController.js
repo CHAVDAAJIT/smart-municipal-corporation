@@ -1,5 +1,5 @@
 const Document = require("../models/document");
-
+const { createNotification } = require("./notificationController");
 // Create request
 exports.createRequest = async (req, res) => {
   try {
@@ -28,16 +28,31 @@ exports.getUserDocs = async (req, res) => {
 };
 
 // Admin update
+
+
 exports.updateStatus = async (req, res) => {
-  const { status } = req.body;
+  try {
+    const { status } = req.body;
 
-  const doc = await Document.findByIdAndUpdate(
-    req.params.id,
-    { status },
-    { new: true }
-  );
+    const doc = await Document.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
 
-  res.json(doc);
+    // ✅ Notification create karo
+    await createNotification(
+      doc.user,
+      "Certificate Request Updated",
+      `Your ${doc.type} certificate request has been "${status}"`,
+      "certificate",
+      "/user/my-certificates"
+    );
+
+    res.json(doc);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 // Admin - Get all document requests
