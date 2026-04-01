@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../../../services/apiUser";
 import DashboardSidebar from "../../../components/user/DashboardSidebar";
 import DashboardHeader from "../../../components/user/DashboardHeader";
 import "../../../styles/Complaint.css";
@@ -8,44 +7,55 @@ import "../../../styles/UserDashboard.css";
 
 function RegisterComplaint() {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    type: "",
-    description: "",
-    area: ""
-  });
-
+  const [form, setForm] = useState({ type: "", description: "", area: "" });
+  const [photos, setPhotos] = useState([]);
+  const [previews, setPreviews] = useState([]);
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handlePhotos = (e) => {
+    const files = [...e.target.files];
+    setPhotos(files);
+    setPreviews(files.map(f => URL.createObjectURL(f)));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/complaints", form);
-      setMessage(res.data.message);
-      setTimeout(() => {
-        navigate("/user/complaints");
-      }, 1200);
+      const token = localStorage.getItem("userToken");
+      const formData = new FormData();
+      formData.append("type", form.type);
+      formData.append("description", form.description);
+      formData.append("area", form.area);
+      photos.forEach(p => formData.append("photos", p));
+
+      const res = await fetch("http://localhost:5000/api/complaints", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+
+      const data = await res.json();
+      setMessage("✅ " + data.message + " (+10 points earned!)");
+      setTimeout(() => navigate("/user/complaints"), 1500);
     } catch (err) {
-      setMessage(err.response?.data?.message || "Error submitting complaint");
+      setMessage("❌ Error submitting complaint");
     }
   };
 
   return (
     <div className="dashboard-container">
       <DashboardSidebar />
-
       <div className="dashboard-main">
         <DashboardHeader />
-
         <div className="dashboard-home">
-          <div className="complaint-center"> {/* ✅ center class */}
+          <div className="complaint-center">
             <div className="complaint-card">
               <h2>Register Complaint</h2>
-              <p className="sub-text">Submit your issue</p>
+              <p className="sub-text">Submit your issue • Earn 10 points! ⭐</p>
 
               <form onSubmit={handleSubmit}>
                 <select name="type" value={form.type} onChange={handleChange} required>
@@ -71,6 +81,26 @@ function RegisterComplaint() {
                   onChange={handleChange}
                   required
                 />
+
+                {/* ✅ Photo Upload */}
+                <div className="complaint-photo-upload">
+                  <label>📸 Add Photos (max 3)</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handlePhotos}
+                  />
+                </div>
+
+                {/* Photo Previews */}
+                {previews.length > 0 && (
+                  <div className="complaint-photo-previews">
+                    {previews.map((p, i) => (
+                      <img key={i} src={p} alt={`preview-${i}`} />
+                    ))}
+                  </div>
+                )}
 
                 <button type="submit">Submit Complaint</button>
               </form>

@@ -39,7 +39,7 @@
 }
 
 /* HEADER */
-.dashboard-header {
+/* .dashboard-header {
   background: white;
   padding: 15px 25px;
   display: flex;
@@ -59,7 +59,7 @@
   color: white;
   border-radius: 6px;
   cursor: pointer;
-}
+} */
 
 /* HOME */
 .dashboard-home {

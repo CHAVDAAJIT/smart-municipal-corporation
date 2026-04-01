@@ -16,6 +16,7 @@ function DashboardSidebar() {
     { label: "Water Management", icon: "💧", path: "/user/water" },
     { label: "Event Announcements", icon: "📢", path: "/user/events" },
     { label: "City Updates", icon: "🏙️", path: "/user/updates" },
+    { label: "My Points & Rewards", icon: "⭐", path: "/user/points" },
     { label: "Notifications", icon: "🔔", path: "/user/notifications" },
     { label: "About Corporation", icon: "ℹ️", path: "/user/about" },
   ];

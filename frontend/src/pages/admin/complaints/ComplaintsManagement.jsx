@@ -8,7 +8,9 @@ import "../../../styles/CertificatesManagement.css";
 function ComplaintsManagement() {
   const [complaints, setComplaints] = useState([]);
   const [selected, setSelected] = useState(null);
-  const [filter, setFilter] = useState("All"); // ✅ Filter state
+  const [filter, setFilter] = useState("All");
+  const [pointsForm, setPointsForm] = useState({ points: "", reason: "" });
+  const [pointsMsg, setPointsMsg] = useState("");
 
   useEffect(() => {
     fetchComplaints();
@@ -43,7 +45,24 @@ function ComplaintsManagement() {
     }
   };
 
-  // ✅ Filter logic
+  const awardPoints = async (id) => {
+    if (!pointsForm.points || !pointsForm.reason) {
+      setPointsMsg("❌ Points aur reason dono required hain");
+      return;
+    }
+    try {
+      await API.put(`/complaints/award-points/${id}`, {
+        points: parseInt(pointsForm.points),
+        reason: pointsForm.reason
+      });
+      setPointsMsg(`✅ ${pointsForm.points} points awarded!`);
+      setPointsForm({ points: "", reason: "" });
+      fetchComplaints();
+    } catch (err) {
+      setPointsMsg("❌ Failed to award points");
+    }
+  };
+
   const filtered = filter === "All"
     ? complaints
     : complaints.filter(c => c.status === filter);
@@ -59,7 +78,7 @@ function ComplaintsManagement() {
           <h2>Complaint Management</h2>
           <p className="sub-text">All citizen complaints</p>
 
-          {/* ✅ FILTER TABS */}
+          {/* Filter Tabs */}
           <div className="cert-filter-tabs">
             {["All", "Pending", "Assigned", "Resolved"].map(tab => (
               <button
@@ -77,6 +96,7 @@ function ComplaintsManagement() {
             ))}
           </div>
 
+          {/* Table */}
           <div className="recent-complaints">
             <table>
               <thead>
@@ -91,7 +111,6 @@ function ComplaintsManagement() {
                   <th>Action</th>
                 </tr>
               </thead>
-
               <tbody>
                 {filtered.length === 0 ? (
                   <tr>
@@ -127,7 +146,11 @@ function ComplaintsManagement() {
                       <td>
                         <button
                           className="cert-view-btn"
-                          onClick={() => setSelected(c)}
+                          onClick={() => {
+                            setSelected(c);
+                            setPointsMsg("");
+                            setPointsForm({ points: "", reason: "" });
+                          }}
                         >
                           👁️ View
                         </button>
@@ -141,12 +164,15 @@ function ComplaintsManagement() {
         </div>
       </div>
 
-      {/* MODAL */}
+      {/* ✅ Modal — sab kuch andar hai */}
       {selected && (
         <div className="cert-modal-overlay" onClick={() => setSelected(null)}>
           <div className="cert-modal" onClick={e => e.stopPropagation()}>
+
             <h3>📋 Complaint Details</h3>
             <hr />
+
+            {/* Info */}
             <div className="cert-modal-info">
               <p><strong>Citizen:</strong> {selected.user?.name}</p>
               <p><strong>Email:</strong> {selected.user?.email}</p>
@@ -161,6 +187,28 @@ function ComplaintsManagement() {
               </p>
             </div>
 
+            {/* ✅ Photos — modal ke andar */}
+            {selected.photos && selected.photos.length > 0 && (
+              <div className="cert-modal-data">
+                <h4>📸 Complaint Photos</h4>
+                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "8px" }}>
+                  {selected.photos.map((photo, i) => (
+                    <img
+                      key={i}
+                      src={`http://localhost:5000/${photo}`}
+                      alt={`complaint-${i}`}
+                      style={{
+                        width: "100px", height: "100px",
+                        objectFit: "cover", borderRadius: "8px",
+                        border: "2px solid #eef2f7"
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Assign Department */}
             <div className="cert-modal-data">
               <h4>🏢 Assign Department</h4>
               <select
@@ -176,6 +224,54 @@ function ComplaintsManagement() {
               </select>
             </div>
 
+            {/* ✅ Award Points — modal ke andar */}
+            <div className="cert-modal-data">
+              <h4>⭐ Award Points to Citizen</h4>
+
+              {selected.pointsAwarded > 0 && (
+                <p style={{ color: "#f57c00", fontWeight: "600", fontSize: "13px", marginBottom: "8px" }}>
+                  Already awarded: {selected.pointsAwarded} points — {selected.pointsReason}
+                </p>
+              )}
+
+              {pointsMsg && (
+                <p style={{
+                  color: pointsMsg.includes("✅") ? "#059669" : "#e63946",
+                  fontSize: "13px", fontWeight: "500", margin: "8px 0"
+                }}>
+                  {pointsMsg}
+                </p>
+              )}
+
+              <input
+                type="number"
+                placeholder="Points (e.g. 50)"
+                value={pointsForm.points}
+                onChange={e => setPointsForm({ ...pointsForm, points: e.target.value })}
+                style={{ width: "100%", padding: "8px 12px", borderRadius: "8px", border: "1.5px solid #e0e0e0", marginBottom: "8px", outline: "none" }}
+                min="1"
+                max="100"
+              />
+              <input
+                placeholder="Reason (e.g. Good photo evidence)"
+                value={pointsForm.reason}
+                onChange={e => setPointsForm({ ...pointsForm, reason: e.target.value })}
+                style={{ width: "100%", padding: "8px 12px", borderRadius: "8px", border: "1.5px solid #e0e0e0", marginBottom: "8px", outline: "none" }}
+              />
+              <button
+                onClick={() => awardPoints(selected._id)}
+                style={{
+                  width: "100%", padding: "10px",
+                  background: "#f57c00", color: "white",
+                  border: "none", borderRadius: "8px",
+                  fontWeight: "600", cursor: "pointer", fontSize: "14px"
+                }}
+              >
+                ⭐ Award Points
+              </button>
+            </div>
+
+            {/* Status Actions */}
             <div className="cert-modal-actions">
               <button
                 className="cert-approve-btn"
@@ -194,6 +290,7 @@ function ComplaintsManagement() {
             <button className="cert-close-btn" onClick={() => setSelected(null)}>
               Close
             </button>
+
           </div>
         </div>
       )}

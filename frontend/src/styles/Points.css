@@ -1,0 +1,305 @@
+.points-page {
+  padding: 25px;
+}
+
+.points-page h2 {
+  font-size: 22px;
+  color: #0f4c75;
+  margin-bottom: 4px;
+}
+
+/* Summary Grid */
+.points-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.points-summary-card {
+  border-radius: 14px;
+  padding: 22px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.points-summary-card:hover {
+  transform: translateY(-4px);
+}
+
+.points-summary-card.gold {
+  background: linear-gradient(135deg, #f57c00, #ff9800);
+  color: white;
+}
+
+.points-summary-card.blue {
+  background: linear-gradient(135deg, #0f4c75, #1b6ca8);
+  color: white;
+}
+
+.points-summary-card.green {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: white;
+}
+
+.points-summary-icon {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.points-summary-card h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: white;
+}
+
+.points-summary-card p {
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.points-money-val {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-top: 4px;
+  display: block;
+}
+
+/* How to Earn */
+.points-how-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+  margin-bottom: 20px;
+}
+
+.points-how-card h3 {
+  font-size: 15px;
+  color: #0f4c75;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.points-how-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.points-how-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #eef2f7;
+}
+
+.points-how-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.points-how-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 2px;
+}
+
+.points-how-pts {
+  font-size: 12px;
+  color: #f57c00;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Redeem */
+.points-redeem-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+  margin-bottom: 20px;
+}
+
+.points-redeem-card h3 {
+  font-size: 15px;
+  color: #0f4c75;
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.points-redeem-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.points-redeem-row input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.points-redeem-row input:focus {
+  border-color: #1b6ca8;
+}
+
+.points-redeem-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #059669;
+  min-width: 60px;
+}
+
+.points-redeem-btn {
+  padding: 10px 20px;
+  background: #f57c00;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.points-redeem-btn:hover {
+  background: #e56d00;
+}
+
+.points-tax-btn {
+  width: 100%;
+  padding: 11px;
+  background: #0f4c75;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.points-tax-btn:hover {
+  background: #083b5c;
+}
+
+/* Leaderboard */
+.points-leaderboard-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+}
+
+.points-leaderboard-card h3 {
+  font-size: 15px;
+  color: #0f4c75;
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.points-lb-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  background: #f8fafc;
+  border: 1px solid #eef2f7;
+  transition: all 0.2s;
+}
+
+.points-lb-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.points-lb-item.gold {
+  background: linear-gradient(135deg, #fff8e1, #fff3cd);
+  border-color: #f57c00;
+}
+
+.points-lb-item.silver {
+  background: linear-gradient(135deg, #f5f5f5, #eeeeee);
+  border-color: #9e9e9e;
+}
+
+.points-lb-item.bronze {
+  background: linear-gradient(135deg, #fbe9e7, #ffccbc);
+  border-color: #bf360c;
+}
+
+.points-lb-rank {
+  font-size: 20px;
+  min-width: 36px;
+  text-align: center;
+}
+
+.points-lb-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #0f4c75;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.points-lb-info {
+  flex: 1;
+}
+
+.points-lb-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 2px;
+}
+
+.points-lb-email {
+  font-size: 11px;
+  color: #888;
+  margin: 0;
+}
+
+.points-lb-score {
+  text-align: right;
+}
+
+.points-lb-pts {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f57c00;
+  margin: 0 0 2px;
+}
+
+.points-lb-money {
+  font-size: 11px;
+  color: #888;
+  margin: 0;
+}

@@ -30,6 +30,7 @@ import AdminAnnouncements from "./pages/admin/Announcements";
 import Announcements from "./pages/user/dashboard/Announcements";
 import Notifications from "./pages/user/dashboard/Notifications";
 import AboutCorporation from "./pages/user/dashboard/AboutCorporation";
+import Points from "./pages/user/dashboard/Points";
 
 import GarbageTracking from "./pages/user/dashboard/GarbageTracking";
 import GarbageMonitoring from "./pages/admin/GarbageMonitoring";
@@ -67,6 +68,7 @@ function AppContent() {
 location.pathname.startsWith("/admin/city-updates") ||
 location.pathname.startsWith("/user/notifications") ||
 location.pathname.startsWith("/user/about") ||
+location.pathname.startsWith("/user/points") ||
     location.pathname.startsWith("/admin/certificates");
 
   return (
@@ -188,6 +190,15 @@ location.pathname.startsWith("/user/about") ||
   element={
     <UserProtectedRoute>
       <AboutCorporation />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route
+  path="/user/points"
+  element={
+    <UserProtectedRoute>
+      <Points />
     </UserProtectedRoute>
   }
 />
