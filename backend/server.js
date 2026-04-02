@@ -11,7 +11,7 @@ const app = express();
 const complaintRoutes = require("./routes/complaintRoutes");
 
 const documentRoutes = require("./routes/documentRoutes");
-
+const adminManageRoutes = require("./routes/adminManageRoutes");
 const waterRoutes = require("./routes/waterRoutes");
 const pointsRoutes = require("./routes/pointsRoutes");
 const announcementRoutes = require("./routes/announcementRoutes");
@@ -45,6 +45,7 @@ app.use("/api/city-updates", cityUpdateRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/points", pointsRoutes);
+app.use("/api/admin-manage", adminManageRoutes);
 mongoose
   .connect("mongodb://127.0.0.1:27017/smartMunicipal")
   .then(() => console.log("MongoDB connected"))

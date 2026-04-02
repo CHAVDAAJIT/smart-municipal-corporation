@@ -31,6 +31,8 @@ import Announcements from "./pages/user/dashboard/Announcements";
 import Notifications from "./pages/user/dashboard/Notifications";
 import AboutCorporation from "./pages/user/dashboard/AboutCorporation";
 import Points from "./pages/user/dashboard/Points";
+import AdminManage from "./pages/admin/AdminManage";
+import UserSettings from "./pages/user/Settings";
 
 import GarbageTracking from "./pages/user/dashboard/GarbageTracking";
 import GarbageMonitoring from "./pages/admin/GarbageMonitoring";
@@ -69,6 +71,8 @@ location.pathname.startsWith("/admin/city-updates") ||
 location.pathname.startsWith("/user/notifications") ||
 location.pathname.startsWith("/user/about") ||
 location.pathname.startsWith("/user/points") ||
+location.pathname.startsWith("/admin/manage") ||
+location.pathname.startsWith("/user/settings") ||
     location.pathname.startsWith("/admin/certificates");
 
   return (
@@ -203,6 +207,15 @@ location.pathname.startsWith("/user/points") ||
   }
 />
 
+<Route
+  path="/user/settings"
+  element={
+    <UserProtectedRoute>
+      <UserSettings />
+    </UserProtectedRoute>
+  }
+/>
+
         {/* ADMIN */}
         <Route
           path="/admin/dashboard"
@@ -306,6 +319,15 @@ location.pathname.startsWith("/user/points") ||
   element={
     <AdminProtectedRoute>
       <AdminCityUpdates />
+    </AdminProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/manage"
+  element={
+    <AdminProtectedRoute>
+      <AdminManage />
     </AdminProtectedRoute>
   }
 />

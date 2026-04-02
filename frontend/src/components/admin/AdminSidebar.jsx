@@ -8,13 +8,15 @@ function AdminSidebar() {
   const menu = [
     { label: "Dashboard Overview", icon: "📊", path: "/admin/dashboard" },
     { label: "Complaints Management", icon: "📝", path: "/admin/complaints" },
+    { label: "Certificates", icon: "📄", path: "/admin/certificates" },
     { label: "Citizens Management", icon: "👥", path: "/admin/citizens" },
     { label: "Garbage Monitoring", icon: "🚛", path: "/admin/garbage" },
     { label: "Water Supply Control", icon: "💧", path: "/admin/water" },
     { label: "Announcements", icon: "📢", path: "/admin/announcements" },
     { label: "City Updates", icon: "🏙️", path: "/admin/city-updates" },
     { label: "Property Tax", icon: "🏠", path: "/admin/property-tax" },
-    { label: "Certificates", icon: "📄", path: "/admin/certificates" },
+    
+    { label: "Admin Management", icon: "👤", path: "/admin/manage" },
     { label: "Reports & Analytics", icon: "📈", path: "/admin/reports" },
     { label: "Settings", icon: "⚙️", path: "/admin/settings" },
   ];

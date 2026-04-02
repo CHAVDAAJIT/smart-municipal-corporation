@@ -19,6 +19,7 @@ function DashboardSidebar() {
     { label: "My Points & Rewards", icon: "⭐", path: "/user/points" },
     { label: "Notifications", icon: "🔔", path: "/user/notifications" },
     { label: "About Corporation", icon: "ℹ️", path: "/user/about" },
+    { label: "Settings", icon: "⚙️", path: "/user/settings" },
   ];
 
   return (

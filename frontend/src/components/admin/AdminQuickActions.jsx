@@ -20,7 +20,9 @@ function AdminQuickActions() {
         >
           📝 Assign Complaint
         </div>
-        <div className="admin-action-card">
+        <div className="admin-action-card"
+        onClick={() => navigate("/admin/manage")}
+        >
           👤 Add Admin
         </div>
         <div

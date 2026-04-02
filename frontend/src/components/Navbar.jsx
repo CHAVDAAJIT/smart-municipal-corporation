@@ -13,11 +13,11 @@ function Navbar() {
         <Link to="/">Home</Link>
         <a href="#services">Services</a>
         <a href="#features">Features</a>
-        <a href="#contact">Contact</a>
+        <a href="#contact">Contact Us</a>
       </nav>
 
       <div className="nav-right">
-        <Link to="/login" className="nav-btn">Login</Link>
+        <Link to="/user/login" className="nav-btn">Get Started</Link>
       </div>
     </header>
   );

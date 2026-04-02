@@ -1,0 +1,256 @@
+.admin-manage-page {
+  padding: 25px;
+}
+
+.admin-manage-page h2 {
+  font-size: 22px;
+  color: #0b3c5d;
+  margin-bottom: 4px;
+}
+
+/* Stats */
+.admin-manage-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.admin-manage-stat {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+}
+
+.admin-manage-stat-icon {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #e8f4fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.admin-manage-stat h4 {
+  margin: 0 0 2px;
+  font-size: 22px;
+  color: #0b3c5d;
+  font-weight: 700;
+}
+
+.admin-manage-stat p {
+  margin: 0;
+  font-size: 12px;
+  color: #888;
+}
+
+/* Add Admin Form */
+.admin-add-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+  margin-bottom: 24px;
+  max-width: 600px;
+}
+
+.admin-add-form-card h3 {
+  font-size: 16px;
+  color: #0b3c5d;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.admin-add-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.admin-add-form-card input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.admin-add-form-card input:focus {
+  border-color: #1b6ca8;
+}
+
+.admin-add-form-full {
+  grid-column: 1 / -1;
+}
+
+.admin-add-btn {
+  padding: 10px 24px;
+  background: #0b3c5d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-add-btn:hover {
+  background: #083050;
+}
+
+/* Success / Error */
+.admin-form-success {
+  background: #d1fae5;
+  color: #059669;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.admin-form-error {
+  background: #ffe4e4;
+  color: #e63946;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+/* Admin List */
+.admin-list-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f7;
+}
+
+.admin-list-card h3 {
+  font-size: 15px;
+  color: #0b3c5d;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+/* Admin Avatar */
+.admin-list-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #0b3c5d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Current Admin Badge */
+.admin-current-badge {
+  background: #e8f4fd;
+  color: #1b6ca8;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Reset Password Modal */
+.reset-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.reset-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  width: 380px;
+  max-width: 90vw;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.reset-modal h3 {
+  font-size: 17px;
+  color: #0b3c5d;
+  margin-bottom: 16px;
+}
+
+.reset-modal input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  margin-bottom: 10px;
+  transition: border 0.2s;
+}
+
+.reset-modal input:focus {
+  border-color: #1b6ca8;
+}
+
+.reset-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.reset-confirm-btn {
+  flex: 1;
+  padding: 10px;
+  background: #0b3c5d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.reset-confirm-btn:hover {
+  background: #083050;
+}
+
+.reset-cancel-btn {
+  flex: 1;
+  padding: 10px;
+  background: #f1f3f5;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.reset-cancel-btn:hover {
+  background: #e2e5e8;
+}
