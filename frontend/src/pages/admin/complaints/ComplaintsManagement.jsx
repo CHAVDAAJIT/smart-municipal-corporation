@@ -131,10 +131,16 @@ function ComplaintsManagement() {
                           onChange={(e) => assignDepartment(c._id, e.target.value)}
                         >
                           <option value="">Assign</option>
-                          <option value="Garbage Dept">Garbage Dept</option>
-                          <option value="Water Dept">Water Dept</option>
-                          <option value="Electric Dept">Electric Dept</option>
-                          <option value="Road Dept">Road Dept</option>
+  <option value="Garbage Dept">🚛 Garbage Dept</option>
+  <option value="Water Dept">💧 Water Dept</option>
+  <option value="Electric Dept">⚡ Electric Dept</option>
+  <option value="Road Dept">🛣️ Road Dept</option>
+  <option value="Drainage Dept">🕳️ Drainage Dept</option>
+  <option value="Park Dept">🌳 Park & Garden Dept</option>
+  <option value="Noise Dept">🔊 Noise Control Dept</option>
+  <option value="Building Dept">🏗️ Building Dept</option>
+  <option value="Animal Control">🐕 Animal Control</option>
+  <option value="General Dept">📋 General Dept</option>
                         </select>
                       </td>
                       <td>
@@ -217,10 +223,16 @@ function ComplaintsManagement() {
                 style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #ccc", marginTop: "8px" }}
               >
                 <option value="">Select Department</option>
-                <option value="Garbage Dept">🚛 Garbage Dept</option>
-                <option value="Water Dept">💧 Water Dept</option>
-                <option value="Electric Dept">⚡ Electric Dept</option>
-                <option value="Road Dept">🛣️ Road Dept</option>
+  <option value="Garbage Dept">🚛 Garbage Dept</option>
+  <option value="Water Dept">💧 Water Dept</option>
+  <option value="Electric Dept">⚡ Electric Dept</option>
+  <option value="Road Dept">🛣️ Road Dept</option>
+  <option value="Drainage Dept">🕳️ Drainage Dept</option>
+  <option value="Park Dept">🌳 Park & Garden Dept</option>
+  <option value="Noise Dept">🔊 Noise Control Dept</option>
+  <option value="Building Dept">🏗️ Building Dept</option>
+  <option value="Animal Control">🐕 Animal Control</option>
+  <option value="General Dept">📋 General Dept</option>
               </select>
             </div>
 

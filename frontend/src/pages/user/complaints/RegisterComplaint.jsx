@@ -7,7 +7,10 @@ import "../../../styles/UserDashboard.css";
 
 function RegisterComplaint() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ type: "", description: "", area: "" });
+
+  const [form, setForm] = useState({
+    type: "", description: "", area: "", priority: "Medium" // ✅ single state
+  });
   const [photos, setPhotos] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [message, setMessage] = useState("");
@@ -17,7 +20,7 @@ function RegisterComplaint() {
   };
 
   const handlePhotos = (e) => {
-    const files = [...e.target.files];
+    const files = [...e.target.files].slice(0, 3);
     setPhotos(files);
     setPreviews(files.map(f => URL.createObjectURL(f)));
   };
@@ -30,6 +33,7 @@ function RegisterComplaint() {
       formData.append("type", form.type);
       formData.append("description", form.description);
       formData.append("area", form.area);
+      formData.append("priority", form.priority); // ✅ priority add
       photos.forEach(p => formData.append("photos", p));
 
       const res = await fetch("http://localhost:5000/api/complaints", {
@@ -58,14 +62,23 @@ function RegisterComplaint() {
               <p className="sub-text">Submit your issue • Earn 10 points! ⭐</p>
 
               <form onSubmit={handleSubmit}>
+
+                {/* Complaint Type */}
                 <select name="type" value={form.type} onChange={handleChange} required>
                   <option value="">Select Complaint Type</option>
-                  <option value="Garbage">Garbage</option>
-                  <option value="Water">Water</option>
-                  <option value="Street Light">Street Light</option>
-                  <option value="Road">Road</option>
+                  <option value="Garbage">🚛 Garbage</option>
+                  <option value="Water">💧 Water</option>
+                  <option value="Street Light">💡 Street Light</option>
+                  <option value="Road">🛣️ Road</option>
+                  <option value="Drainage">🕳️ Drainage</option>
+                  <option value="Park">🌳 Park & Garden</option>
+                  <option value="Noise">🔊 Noise Pollution</option>
+                  <option value="Building">🏗️ Illegal Construction</option>
+                  <option value="Stray Animals">🐕 Stray Animals</option>
+                  <option value="Other">📋 Other</option>
                 </select>
 
+                {/* Area */}
                 <input
                   name="area"
                   placeholder="Area / Ward"
@@ -74,15 +87,24 @@ function RegisterComplaint() {
                   required
                 />
 
+                {/* Description */}
                 <textarea
                   name="description"
-                  placeholder="Describe your complaint"
+                  placeholder="Describe your complaint in detail..."
                   value={form.description}
                   onChange={handleChange}
                   required
                 />
 
-                {/* ✅ Photo Upload */}
+                {/* Priority */}
+                <select name="priority" value={form.priority} onChange={handleChange} required>
+                  <option value="">Select Priority</option>
+                  <option value="Low">🟢 Low — Minor issue</option>
+                  <option value="Medium">🟡 Medium — Moderate issue</option>
+                  <option value="High">🔴 High — Urgent issue</option>
+                </select>
+
+                {/* Photo Upload */}
                 <div className="complaint-photo-upload">
                   <label>📸 Add Photos (max 3)</label>
                   <input

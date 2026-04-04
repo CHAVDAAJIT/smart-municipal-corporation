@@ -4,28 +4,37 @@ const { createNotification } = require("./notificationController");
 
 /* ================= USER ================= */
 
-// Register complaint with photos
+// Register complaint
 exports.registerComplaint = async (req, res) => {
   try {
-    const { type, description, area } = req.body;
+    const { title, type, description, area, priority, location } = req.body;
 
     if (!type || !description || !area) {
       return res.status(400).json({ message: "All fields required" });
     }
 
-    // ✅ Photos
     const photos = req.files ? req.files.map(f => f.path) : [];
 
     const complaint = await Complaint.create({
       user: req.user.id,
+      title,
       type,
+      location,
       description,
       area,
+      priority: priority || "Medium",
       photos,
-      status: "Pending"
+      status: "Pending",
+      timeline: [
+        {
+          status: "Pending",
+          message: "Complaint submitted successfully",
+          timestamp: new Date()
+        }
+      ]
     });
 
-    // ✅ 10 points for registering complaint
+    // +10 points
     await User.findByIdAndUpdate(req.user.id, {
       $inc: { points: 10, totalPointsEarned: 10 }
     });
@@ -33,10 +42,19 @@ exports.registerComplaint = async (req, res) => {
     await createNotification(
       req.user.id,
       "Complaint Registered! +10 Points",
-      `You earned 10 points for registering a ${type} complaint.`,
+      `Your ${type} complaint has been submitted. You earned 10 points!`,
       "complaint",
       "/user/complaints"
     );
+
+    // ✅ socket event
+    if (global.io) {
+      global.io.emit("newComplaint", {
+        type,
+        area,
+        userId: req.user.id
+      });
+    }
 
     res.status(201).json({
       message: "Complaint registered successfully",
@@ -53,7 +71,78 @@ exports.getMyComplaints = async (req, res) => {
   try {
     const complaints = await Complaint.find({ user: req.user.id })
       .sort({ createdAt: -1 });
+
     res.json(complaints);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Edit complaint
+exports.editComplaint = async (req, res) => {
+  try {
+    const { description, area, priority } = req.body;
+
+    const complaint = await Complaint.findOne({
+      _id: req.params.id,
+      user: req.user.id
+    });
+
+    if (!complaint)
+      return res.status(404).json({ message: "Complaint not found" });
+
+    if (complaint.status !== "Pending") {
+      return res.status(400).json({
+        message: "Only Pending complaints can be edited"
+      });
+    }
+
+    complaint.description = description || complaint.description;
+    complaint.area = area || complaint.area;
+    complaint.priority = priority || complaint.priority;
+
+    complaint.timeline.push({
+      status: "Pending",
+      message: "Complaint details updated by citizen",
+      timestamp: new Date()
+    });
+
+    await complaint.save();
+
+    res.json({ message: "Complaint updated", complaint });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Cancel complaint
+exports.cancelComplaint = async (req, res) => {
+  try {
+    const complaint = await Complaint.findOne({
+      _id: req.params.id,
+      user: req.user.id
+    });
+
+    if (!complaint)
+      return res.status(404).json({ message: "Complaint not found" });
+
+    if (complaint.status !== "Pending") {
+      return res.status(400).json({
+        message: "Only Pending complaints can be cancelled"
+      });
+    }
+
+    complaint.status = "Cancelled";
+
+    complaint.timeline.push({
+      status: "Cancelled",
+      message: "Complaint cancelled by citizen",
+      timestamp: new Date()
+    });
+
+    await complaint.save();
+
+    res.json({ message: "Complaint cancelled", complaint });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
@@ -67,6 +156,7 @@ exports.getAllComplaints = async (req, res) => {
     const complaints = await Complaint.find()
       .populate("user", "name email points")
       .sort({ createdAt: -1 });
+
     res.json(complaints);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
@@ -77,11 +167,31 @@ exports.getAllComplaints = async (req, res) => {
 exports.assignDepartment = async (req, res) => {
   try {
     const { department } = req.body;
+
     const complaint = await Complaint.findByIdAndUpdate(
       req.params.id,
-      { department, status: "Assigned" },
+      {
+        department,
+        status: "Assigned",
+        $push: {
+          timeline: {
+            status: "Assigned",
+            message: `Assigned to ${department}`,
+            timestamp: new Date()
+          }
+        }
+      },
       { new: true }
     );
+
+    await createNotification(
+      complaint.user,
+      "Complaint Assigned",
+      `Your complaint has been assigned to ${department}`,
+      "complaint",
+      "/user/complaints"
+    );
+
     res.json({ message: "Department assigned", complaint });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
@@ -92,19 +202,45 @@ exports.assignDepartment = async (req, res) => {
 exports.updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
+
+    const messages = {
+      Pending: "Complaint marked as pending",
+      Assigned: "Complaint assigned to department",
+      Resolved: "Complaint has been resolved",
+      Cancelled: "Complaint has been cancelled"
+    };
+
     const complaint = await Complaint.findByIdAndUpdate(
       req.params.id,
-      { status },
+      {
+        status,
+        $push: {
+          timeline: {
+            status,
+            message: messages[status] || `Status updated to ${status}`,
+            timestamp: new Date()
+          }
+        }
+      },
       { new: true }
     );
 
     await createNotification(
       complaint.user,
       "Complaint Status Updated",
-      `Your complaint (#${complaint._id.toString().slice(-6)}) status changed to "${status}"`,
+      `Your complaint status changed to "${status}"`,
       "complaint",
       "/user/complaints"
     );
+
+    // ✅ socket event
+    if (global.io) {
+      global.io.emit("complaintUpdated", {
+        complaintId: req.params.id,
+        status,
+        userId: complaint.user
+      });
+    }
 
     res.json({ message: "Status updated", complaint });
   } catch (err) {
@@ -112,33 +248,35 @@ exports.updateStatus = async (req, res) => {
   }
 };
 
-// ✅ Award points to citizen
+// Award points
 exports.awardPoints = async (req, res) => {
   try {
     const { points, reason } = req.body;
 
-    const complaint = await Complaint.findById(req.params.id)
-      .populate("user");
+    const complaint = await Complaint.findById(req.params.id).populate("user");
 
-    if (!complaint) {
-      return res.status(404).json({ message: "Complaint not found" });
-    }
+    if (!complaint)
+      return res.status(404).json({ message: "Not found" });
 
-    // Update complaint
     complaint.pointsAwarded = points;
     complaint.pointsReason = reason;
-    await complaint.save();
 
-    // Update user points
-    await User.findByIdAndUpdate(complaint.user._id, {
-      $inc: { points: points, totalPointsEarned: points }
+    complaint.timeline.push({
+      status: complaint.status,
+      message: `Admin awarded ${points} points — ${reason}`,
+      timestamp: new Date()
     });
 
-    // Notification
+    await complaint.save();
+
+    await User.findByIdAndUpdate(complaint.user._id, {
+      $inc: { points, totalPointsEarned: points }
+    });
+
     await createNotification(
       complaint.user._id,
       `🎉 You earned ${points} points!`,
-      `Admin awarded you ${points} points for your complaint. Reason: ${reason}`,
+      `Admin awarded ${points} points. Reason: ${reason}`,
       "complaint",
       "/user/points"
     );
@@ -154,9 +292,10 @@ exports.getComplaintById = async (req, res) => {
   try {
     const complaint = await Complaint.findById(req.params.id)
       .populate("user", "name email points");
-    if (!complaint) {
-      return res.status(404).json({ message: "Complaint not found" });
-    }
+
+    if (!complaint)
+      return res.status(404).json({ message: "Not found" });
+
     res.json(complaint);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
@@ -168,9 +307,11 @@ exports.getComplaintById = async (req, res) => {
 exports.getCitizenStats = async (req, res) => {
   try {
     const userId = req.user.id;
+
     const total = await Complaint.countDocuments({ user: userId });
-    const pending = await Complaint.countDocuments({ user: userId, status: { $regex: /^pending$/i } });
-    const resolved = await Complaint.countDocuments({ user: userId, status: { $regex: /^resolved$/i } });
+    const pending = await Complaint.countDocuments({ user: userId, status: "Pending" });
+    const resolved = await Complaint.countDocuments({ user: userId, status: "Resolved" });
+
     res.json({ total, pending, resolved });
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch stats" });
@@ -180,22 +321,28 @@ exports.getCitizenStats = async (req, res) => {
 exports.getAdminStats = async (req, res) => {
   try {
     const totalComplaints = await Complaint.countDocuments();
-    const pendingComplaints = await Complaint.countDocuments({ status: { $regex: /^pending$/i } });
-    const resolvedComplaints = await Complaint.countDocuments({ status: { $regex: /^resolved$/i } });
+    const pendingComplaints = await Complaint.countDocuments({ status: "Pending" });
+    const resolvedComplaints = await Complaint.countDocuments({ status: "Resolved" });
     const activeCitizens = await User.countDocuments();
-    res.json({ totalComplaints, pendingComplaints, resolvedComplaints, activeCitizens });
+
+    res.json({
+      totalComplaints,
+      pendingComplaints,
+      resolvedComplaints,
+      activeCitizens
+    });
   } catch (err) {
-    res.status(500).json({ message: "Failed to fetch admin stats" });
+    res.status(500).json({ message: "Failed to fetch stats" });
   }
 };
 
-// ✅ Leaderboard
 exports.getLeaderboard = async (req, res) => {
   try {
     const users = await User.find({ totalPointsEarned: { $gt: 0 } })
       .select("name email totalPointsEarned points")
       .sort({ totalPointsEarned: -1 })
       .limit(10);
+
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: "Server error" });

@@ -69,3 +69,124 @@
   color: red;
   margin-top: 10px;
 }
+
+/* OTP Input */
+.otp-inputs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.otp-input {
+  width: 48px !important;
+  height: 52px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.otp-input:focus {
+  border-color: #0f4c75;
+}
+
+.otp-timer {
+  font-size: 13px;
+  color: #888;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.otp-timer span {
+  color: #e63946;
+  font-weight: 600;
+}
+
+.resend-btn {
+  background: none;
+  border: none;
+  color: #0f4c75;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.resend-btn:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  transition: background 0.3s;
+}
+
+.step-dot.active {
+  background: #0f4c75;
+}
+
+.forgot-link {
+  text-align: right;
+  margin-top: -8px;
+  margin-bottom: 12px;
+}
+
+.forgot-link button {
+  background: none;
+  border: none;
+  color: #0f4c75;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.forgot-link button:hover {
+  text-decoration: underline;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 13px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.back-btn:hover {
+  color: #333;
+}
+
+.success-box {
+  background: #d1fae5;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.success-box p {
+  color: #059669;
+  font-weight: 600;
+  margin: 0;
+  font-size: 14px;
+}

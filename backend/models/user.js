@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   mobile: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   isBlocked: { type: Boolean, default: false },
-  // ✅ Points system
+  isVerified: { type: Boolean, default: false },
   points: { type: Number, default: 0 },
   totalPointsEarned: { type: Number, default: 0 },
   pointsUsed: { type: Number, default: 0 },

@@ -33,7 +33,7 @@ import AboutCorporation from "./pages/user/dashboard/AboutCorporation";
 import Points from "./pages/user/dashboard/Points";
 import AdminManage from "./pages/admin/AdminManage";
 import UserSettings from "./pages/user/Settings";
-
+import AdminLiveChat from "./pages/admin/LiveChat";
 import GarbageTracking from "./pages/user/dashboard/GarbageTracking";
 import GarbageMonitoring from "./pages/admin/GarbageMonitoring";
 import Settings from "./pages/admin/Settings";
@@ -73,6 +73,7 @@ location.pathname.startsWith("/user/about") ||
 location.pathname.startsWith("/user/points") ||
 location.pathname.startsWith("/admin/manage") ||
 location.pathname.startsWith("/user/settings") ||
+location.pathname.startsWith("/admin/chat") ||
     location.pathname.startsWith("/admin/certificates");
 
   return (
@@ -328,6 +329,15 @@ location.pathname.startsWith("/user/settings") ||
   element={
     <AdminProtectedRoute>
       <AdminManage />
+    </AdminProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/chat"
+  element={
+    <AdminProtectedRoute>
+      <AdminLiveChat />
     </AdminProtectedRoute>
   }
 />

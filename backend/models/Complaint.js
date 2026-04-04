@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+const timelineSchema = new mongoose.Schema({
+  status: { type: String, required: true },
+  message: { type: String, required: true },
+  timestamp: { type: Date, default: Date.now },
+});
+
 const complaintSchema = new mongoose.Schema(
   {
     user: {
@@ -13,10 +19,18 @@ const complaintSchema = new mongoose.Schema(
     department: { type: String, default: "" },
     status: {
       type: String,
-      enum: ["Pending", "Assigned", "Resolved"],
+      enum: ["Pending", "Assigned", "Resolved", "Cancelled"],
       default: "Pending"
     },
-    // ✅ Photo support
+    // ✅ Priority
+    priority: {
+      type: String,
+      enum: ["Low", "Medium", "High"],
+      default: "Medium"
+    },
+    // ✅ Timeline
+    timeline: [timelineSchema],
+    // ✅ Photos
     photos: [{ type: String }],
     // ✅ Points
     pointsAwarded: { type: Number, default: 0 },
