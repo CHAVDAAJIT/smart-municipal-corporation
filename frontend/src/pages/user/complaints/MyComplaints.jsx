@@ -6,6 +6,9 @@ import "../../../styles/Complaint.css";
 import "../../../styles/UserDashboard.css";
 import "../../../styles/MyCertificates.css";
 import "../../../styles/ComplaintTimeline.css";
+import FeedbackModal from "../../../components/user/FeedbackModal";
+import "../../../styles/Feedback.css";
+
 
 function MyComplaints() {
   const [complaints, setComplaints] = useState([]);
@@ -14,9 +17,12 @@ function MyComplaints() {
   const [editModal, setEditModal] = useState(null); // edit modal
   const [editForm, setEditForm] = useState({ description: "", area: "", priority: "" });
   const [editMsg, setEditMsg] = useState("");
+  const [feedbackComplaint, setFeedbackComplaint] = useState(null);
+const [myFeedbacks, setMyFeedbacks] = useState([]);
 
   useEffect(() => {
     fetchComplaints();
+    fetchMyFeedbacks();
   }, []);
 
   const fetchComplaints = async () => {
@@ -27,6 +33,12 @@ function MyComplaints() {
       console.log(err);
     }
   };
+  const fetchMyFeedbacks = async () => {
+  try {
+    const res = await API.get("/feedback/my");
+    setMyFeedbacks(res.data.map(f => f.complaint));
+  } catch (err) { console.log(err); }
+};
 
   const handleEdit = async () => {
     try {
@@ -189,6 +201,20 @@ function MyComplaints() {
                               ❌ Cancel
                             </button>
                           )}
+
+                          {c.status === "Resolved" && !myFeedbacks.includes(c._id) && (
+  <button
+    style={{
+      padding: "5px 10px",
+      background: "#fff3cd", color: "#b08900",
+      border: "none", borderRadius: "6px",
+      fontSize: "12px", cursor: "pointer", fontWeight: "500"
+    }}
+    onClick={() => setFeedbackComplaint(c)}
+  >
+    ⭐ Rate
+  </button>
+)}
                         </div>
                       </td>
                     </tr>
@@ -269,6 +295,8 @@ function MyComplaints() {
               </div>
             )}
 
+            
+
             <button className="cert-close-btn" onClick={() => setSelected(null)}>
               Close
             </button>
@@ -332,6 +360,13 @@ function MyComplaints() {
           </div>
         </div>
       )}
+      {feedbackComplaint && (
+  <FeedbackModal
+    complaint={feedbackComplaint}
+    onClose={() => setFeedbackComplaint(null)}
+    onSuccess={fetchMyFeedbacks}
+  />
+)}
     </div>
   );
 }

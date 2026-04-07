@@ -16,8 +16,14 @@ const chatMessageSchema = new mongoose.Schema({
   },
   senderName: { type: String },
   message: { type: String, required: true },
-  roomId: { type: String, required: true }, // userId based room
+  roomId: { type: String, required: true },
+  chatType: {
+    type: String,
+    enum: ["bot", "live"],
+    default: "live"
+  },
   isRead: { type: Boolean, default: false },
+  sessionId: { type: String }, // ✅ session track
 }, { timestamps: true });
 
 module.exports = mongoose.model("ChatMessage", chatMessageSchema);

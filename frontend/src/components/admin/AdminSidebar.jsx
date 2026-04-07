@@ -15,6 +15,7 @@ function AdminSidebar() {
     { label: "Announcements", icon: "📢", path: "/admin/announcements" },
     { label: "City Updates", icon: "🏙️", path: "/admin/city-updates" },
     { label: "Property Tax", icon: "🏠", path: "/admin/property-tax" },
+    { label: "Feedback & Ratings", icon: "⭐", path: "/admin/feedback" },
     { label: "Live Chat Support", icon: "💬", path: "/admin/chat" },
     { label: "Admin Management", icon: "👤", path: "/admin/manage" },
     { label: "Reports & Analytics", icon: "📈", path: "/admin/reports" },

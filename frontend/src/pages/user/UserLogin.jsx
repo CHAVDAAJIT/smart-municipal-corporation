@@ -68,6 +68,7 @@ function UserLogin() {
         captchaText: captcha,
       });
       localStorage.setItem("userToken", res.data.token);
+      localStorage.setItem("refreshToken", res.data.refreshToken);
       navigate("/user/dashboard");
     } catch (err) {
       const data = err.response?.data;

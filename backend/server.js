@@ -8,31 +8,33 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 
-// ✅ Socket.io
+// ✅ ADD THIS (YOU MISSED THIS PART)
 const io = new Server(server, {
-  cors: { origin: "http://localhost:3000", methods: ["GET", "POST"] }
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
 });
 
-global.io = io;
+global.io = io; // optional but good practice
 
+// ✅ IMPORT MODEL (also missing)
 const ChatMessage = require("./models/chatMessage");
-const { getBotResponse } = require("./utils/aiChatbot");
 
-// ✅ Socket events
+/* 
+   SOCKET EVENTS
+ */
 io.on("connection", (socket) => {
   console.log("Client connected:", socket.id);
 
-  // Join room
   socket.on("joinRoom", (roomId) => {
     socket.join(roomId);
-    console.log(`Socket ${socket.id} joined room ${roomId}`);
   });
 
-  // User sends message
-  socket.on("userMessage", async (data) => {
+  // ✅ User live message
+  socket.on("userLiveMessage", async (data) => {
     const { message, roomId, userId, userName } = data;
 
-    // Save to DB
     const saved = await ChatMessage.create({
       sender: "user",
       senderId: userId,
@@ -40,28 +42,14 @@ io.on("connection", (socket) => {
       senderName: userName,
       message,
       roomId,
+      chatType: "live",
     });
 
-    // Emit to room
-    io.to(roomId).emit("newMessage", saved);
-
-    // Notify admin
-    io.emit("adminNotify", { roomId, message, userName });
-
-    // ✅ Bot response (if admin not active — auto reply after 2 sec)
-    setTimeout(async () => {
-      const botReply = getBotResponse(message);
-      const botMsg = await ChatMessage.create({
-        sender: "bot",
-        senderName: "Smart Assistant 🤖",
-        message: botReply,
-        roomId,
-      });
-      io.to(roomId).emit("newMessage", botMsg);
-    }, 1500);
+    io.to(roomId).emit("newLiveMessage", saved);
+    io.emit("adminNotify", { roomId, message, userName, unread: true });
   });
 
-  // Admin sends message
+  // ✅ Admin message
   socket.on("adminMessage", async (data) => {
     const { message, roomId, adminName } = data;
 
@@ -70,9 +58,10 @@ io.on("connection", (socket) => {
       senderName: adminName || "Admin",
       message,
       roomId,
+      chatType: "live",
     });
 
-    io.to(roomId).emit("newMessage", saved);
+    io.to(roomId).emit("newLiveMessage", saved);
   });
 
   socket.on("disconnect", () => {
@@ -80,12 +69,16 @@ io.on("connection", (socket) => {
   });
 });
 
-// Middleware
+/* 
+   MIDDLEWARE
+ */
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-// Routes
+/* 
+   ROUTES
+ */
 const adminAuthRoutes = require("./routes/adminAuth");
 const adminProtectedRoutes = require("./routes/adminProtected");
 const complaintRoutes = require("./routes/complaintRoutes");
@@ -102,7 +95,10 @@ const adminManageRoutes = require("./routes/adminManageRoutes");
 const pointsRoutes = require("./routes/pointsRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const { generalLimiter, authLimiter } = require("./middleware/rateLimiter");
+const feedbackRoutes = require("./routes/feedbackRoutes");
 
+app.use("/api/feedback", feedbackRoutes);
 app.use("/api/admin", adminProtectedRoutes);
 app.use("/api/admin", adminAuthRoutes);
 app.use("/api/auth", require("./routes/auth"));
@@ -122,13 +118,21 @@ app.use("/api/admin-manage", adminManageRoutes);
 app.use("/api/points", pointsRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/chat", chatRoutes);
+// Apply general limit to all routes
+app.use("/api", generalLimiter);
 
+// Apply strict limit to auth routes
+app.use("/api/auth", authLimiter);
+
+/*
+   DATABASE
+ */
 mongoose
   .connect("mongodb://127.0.0.1:27017/smartMunicipal")
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
-// ✅ server.listen (http server)
+/*SERVER START*/
 server.listen(5000, () => {
   console.log("Server running on port 5000");
 });

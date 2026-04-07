@@ -1,29 +1,43 @@
 const ChatMessage = require("../models/chatMessage");
 const User = require("../models/user");
 
-// Get chat history
+// Get live chat history only
 exports.getChatHistory = async (req, res) => {
   try {
     const roomId = req.params.roomId;
-    const messages = await ChatMessage.find({ roomId })
-      .sort({ createdAt: 1 })
-      .limit(100);
+    const messages = await ChatMessage.find({
+      roomId,
+      chatType: "live" // ✅ sirf live chat
+    }).sort({ createdAt: 1 }).limit(100);
     res.json(messages);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
 
-// Get all chat rooms (admin)
+// Get all chat rooms (admin) — only live chats
 exports.getAllRooms = async (req, res) => {
   try {
-    // Distinct roomIds
     const rooms = await ChatMessage.aggregate([
-      { $group: { _id: "$roomId", lastMessage: { $last: "$message" }, lastTime: { $last: "$createdAt" }, unread: { $sum: { $cond: [{ $eq: ["$isRead", false] }, 1, 0] } } } },
+      { $match: { chatType: "live" } }, // ✅ sirf live
+      {
+        $group: {
+          _id: "$roomId",
+          lastMessage: { $last: "$message" },
+          lastTime: { $last: "$createdAt" },
+          unread: {
+            $sum: {
+              $cond: [
+                { $and: [{ $eq: ["$isRead", false] }, { $eq: ["$sender", "user"] }] },
+                1, 0
+              ]
+            }
+          }
+        }
+      },
       { $sort: { lastTime: -1 } }
     ]);
 
-    // User details fetch karo
     const roomsWithUser = await Promise.all(
       rooms.map(async (room) => {
         const user = await User.findById(room._id).select("name email");
@@ -45,6 +59,17 @@ exports.markRead = async (req, res) => {
       { isRead: true }
     );
     res.json({ message: "Marked as read" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// ✅ Delete old sessions (called on new session start)
+exports.clearOldSession = async (req, res) => {
+  try {
+    const { roomId, chatType } = req.body;
+    await ChatMessage.deleteMany({ roomId, chatType });
+    res.json({ message: "Session cleared" });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }

@@ -25,7 +25,7 @@ import MyCertificates from "./pages/user/dashboard/MyCertificates";
 
 import WaterManagement from "./pages/user/dashboard/WaterManagement";
 import AdminWaterManagement from "./pages/admin/WaterManagement";
-
+import AdminFeedback from "./pages/admin/Feedback";
 import AdminAnnouncements from "./pages/admin/Announcements";
 import Announcements from "./pages/user/dashboard/Announcements";
 import Notifications from "./pages/user/dashboard/Notifications";
@@ -74,6 +74,7 @@ location.pathname.startsWith("/user/points") ||
 location.pathname.startsWith("/admin/manage") ||
 location.pathname.startsWith("/user/settings") ||
 location.pathname.startsWith("/admin/chat") ||
+location.pathname.startsWith("/admin/feedback") ||
     location.pathname.startsWith("/admin/certificates");
 
   return (
@@ -338,6 +339,14 @@ location.pathname.startsWith("/admin/chat") ||
   element={
     <AdminProtectedRoute>
       <AdminLiveChat />
+    </AdminProtectedRoute>
+  }
+/>
+<Route
+  path="/admin/feedback"
+  element={
+    <AdminProtectedRoute>
+      <AdminFeedback />
     </AdminProtectedRoute>
   }
 />

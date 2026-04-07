@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../../services/apiUser";
 import "../../styles/DashboardHeader.css";
+import GlobalSearch from "../user/GlobalSearch";
 
 function DashboardHeader() {
   const [user, setUser] = useState(null);
@@ -46,6 +47,8 @@ function DashboardHeader() {
           </p>
         )}
       </div>
+
+        <GlobalSearch />
 
       <div className="dashboard-header-right">
         {/* ✅ Points Badge */}
