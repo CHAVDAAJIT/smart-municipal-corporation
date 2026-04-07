@@ -1,4 +1,6 @@
 const Announcement = require("../models/announcement");
+const User = require("../models/user");
+const { sendAnnouncementEmail } = require("../utils/emailService");
 
 // ===== USER =====
 exports.getAnnouncements = async (req, res) => {
@@ -14,8 +16,7 @@ exports.getAnnouncements = async (req, res) => {
 // ===== ADMIN =====
 exports.getAllAnnouncements = async (req, res) => {
   try {
-    const announcements = await Announcement.find()
-      .sort({ createdAt: -1 });
+    const announcements = await Announcement.find().sort({ createdAt: -1 });
     res.json(announcements);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
@@ -25,14 +26,36 @@ exports.getAllAnnouncements = async (req, res) => {
 exports.createAnnouncement = async (req, res) => {
   try {
     const { title, description, category, priority } = req.body;
+
     if (!title || !description) {
       return res.status(400).json({ message: "Title and description required" });
     }
+
+    // ✅ Save announcement
     const announcement = await Announcement.create({
-      title, description, category, priority
+      title, description, category, priority,
     });
-    res.status(201).json({ message: "Announcement created", announcement });
+
+    // ✅ Send email to ALL citizens (parallel, non-blocking)
+    const users = await User.find({}, "email name");
+
+    Promise.all(
+      users.map((user) =>
+        sendAnnouncementEmail(user.email, user.name, {
+          title,
+          message: description,   // emailService expects "message" field
+          priority,
+        })
+      )
+    ).catch((err) => console.error("Announcement email error:", err));
+
+    res.status(201).json({
+      message: "Announcement created & emails sent",
+      announcement,
+    });
+
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };

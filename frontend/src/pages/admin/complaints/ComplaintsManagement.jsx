@@ -36,14 +36,16 @@ function ComplaintsManagement() {
   };
 
   const updateStatus = async (id, status) => {
-    try {
-      await API.put(`/complaints/status/${id}`, { status });
-      fetchComplaints();
-      setSelected(prev => prev ? { ...prev, status } : null);
-    } catch (err) {
-      alert("Failed to update status");
-    }
-  };
+  try {
+    await API.put(`/complaints/status/${id}`, { status });
+    fetchComplaints();
+    setSelected(null); 
+    setPointsMsg("");
+    setPointsForm({ points: "", reason: "" });
+  } catch (err) {
+    alert("Failed to update status");
+  }
+};
 
   const awardPoints = async (id) => {
     if (!pointsForm.points || !pointsForm.reason) {

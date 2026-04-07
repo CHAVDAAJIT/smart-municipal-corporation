@@ -5,6 +5,7 @@ const {
   BillInfo
 } = require("../models/waterManagement");
 const { createNotification } = require("./notificationController");
+const { sendWaterStatusEmail } = require("../utils/emailService");
 /* ===== USER ===== */
 
 exports.createRequest = async (req, res) => {
@@ -65,16 +66,28 @@ exports.updateStatus = async (req, res) => {
       req.params.id,
       { status },
       { new: true }
-    );
+    ).populate("user", "name email");
 
-    // ✅ Notification create karo
+    // ✅ In-app notification
     await createNotification(
-      request.user,
+      request.user._id,
       "Water Request Updated",
       `Your ${request.type} request status changed to "${status}"`,
       "water",
       "/user/water"
     );
+
+    // ✅ Email notification
+    try {
+      await sendWaterStatusEmail(request.user.email, request.user.name, {
+        type: request.type,
+        area: request.area,
+        status,
+        requestId: request._id.toString().slice(-6)
+      });
+    } catch (emailErr) {
+      console.log("Email error:", emailErr.message);
+    }
 
     res.json({ message: "Status updated", request });
   } catch (err) {

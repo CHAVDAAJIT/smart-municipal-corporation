@@ -1,7 +1,10 @@
 const Complaint = require("../models/Complaint");
 const User = require("../models/user");
 const { createNotification } = require("./notificationController");
-
+const {
+  sendStatusUpdateEmail,
+  sendPointsEmail
+} = require("../utils/emailService");
 /* ================= USER ================= */
 
 // Register complaint
@@ -202,12 +205,11 @@ exports.assignDepartment = async (req, res) => {
 exports.updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
-
     const messages = {
-      Pending: "Complaint marked as pending",
-      Assigned: "Complaint assigned to department",
-      Resolved: "Complaint has been resolved",
-      Cancelled: "Complaint has been cancelled"
+      "Pending": "Complaint marked as pending",
+      "Assigned": "Complaint assigned to department",
+      "Resolved": "Complaint has been resolved",
+      "Cancelled": "Complaint has been cancelled"
     };
 
     const complaint = await Complaint.findByIdAndUpdate(
@@ -223,7 +225,7 @@ exports.updateStatus = async (req, res) => {
         }
       },
       { new: true }
-    );
+    ).populate("user", "name email");
 
     await createNotification(
       complaint.user,
@@ -233,14 +235,45 @@ exports.updateStatus = async (req, res) => {
       "/user/complaints"
     );
 
-    // ✅ socket event
+    // ✅ In-app notification
+    await createNotification(
+      complaint.user._id,
+      `Complaint Status Updated — ${status}`,
+      `Your ${complaint.type} complaint (#${complaint._id.toString().slice(-6)}) is now "${status}"`,
+      "complaint",
+      "/user/complaints"
+    );
+
+    // ✅ Email notification
+    try {
+      await sendStatusUpdateEmail(complaint.user.email, complaint.user.name, {
+        type: complaint.type,
+        area: complaint.area,
+        status,
+        complaintId: complaint._id.toString().slice(-6)
+      });
+    } catch (emailErr) {
+      console.log("Email send error:", emailErr.message);
+    }
+
+    // ✅ Socket real-time
     if (global.io) {
       global.io.emit("complaintUpdated", {
         complaintId: req.params.id,
         status,
-        userId: complaint.user
+        userId: complaint.user._id
       });
     }
+
+
+    // ✅ socket event
+    // if (global.io) {
+    //   global.io.emit("complaintUpdated", {
+    //     complaintId: req.params.id,
+    //     status,
+    //     userId: complaint.user
+    //   });
+    // }
 
     res.json({ message: "Status updated", complaint });
   } catch (err) {
@@ -252,27 +285,27 @@ exports.updateStatus = async (req, res) => {
 exports.awardPoints = async (req, res) => {
   try {
     const { points, reason } = req.body;
+    const complaint = await Complaint.findById(req.params.id)
+      .populate("user", "name email points");
 
-    const complaint = await Complaint.findById(req.params.id).populate("user");
-
-    if (!complaint)
-      return res.status(404).json({ message: "Not found" });
+    if (!complaint) return res.status(404).json({ message: "Not found" });
 
     complaint.pointsAwarded = points;
     complaint.pointsReason = reason;
-
     complaint.timeline.push({
       status: complaint.status,
       message: `Admin awarded ${points} points — ${reason}`,
       timestamp: new Date()
     });
-
     await complaint.save();
 
-    await User.findByIdAndUpdate(complaint.user._id, {
-      $inc: { points, totalPointsEarned: points }
-    });
+    const updatedUser = await User.findByIdAndUpdate(
+      complaint.user._id,
+      { $inc: { points, totalPointsEarned: points } },
+      { new: true }
+    );
 
+    // ✅ In-app notification
     await createNotification(
       complaint.user._id,
       `🎉 You earned ${points} points!`,
@@ -280,6 +313,18 @@ exports.awardPoints = async (req, res) => {
       "complaint",
       "/user/points"
     );
+
+    // ✅ Email notification
+    try {
+      await sendPointsEmail(complaint.user.email, complaint.user.name, {
+        points,
+        reason,
+        totalPoints: updatedUser.points
+      });
+    } catch (emailErr) {
+      console.log("Email send error:", emailErr.message);
+    }
+
 
     res.json({ message: `${points} points awarded!` });
   } catch (err) {

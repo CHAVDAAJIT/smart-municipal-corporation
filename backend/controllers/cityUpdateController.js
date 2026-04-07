@@ -1,17 +1,16 @@
 const CityUpdate = require("../models/cityUpdate");
+const User = require("../models/user");
+const { sendCityUpdateEmail } = require("../utils/emailService");
 
-/* ===== USER ===== */
 exports.getUpdates = async (req, res) => {
   try {
-    const updates = await CityUpdate.find({ isActive: true })
-      .sort({ createdAt: -1 });
+    const updates = await CityUpdate.find({ isActive: true }).sort({ createdAt: -1 });
     res.json(updates);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
 
-/* ===== ADMIN ===== */
 exports.getAllUpdates = async (req, res) => {
   try {
     const updates = await CityUpdate.find().sort({ createdAt: -1 });
@@ -23,15 +22,31 @@ exports.getAllUpdates = async (req, res) => {
 
 exports.createUpdate = async (req, res) => {
   try {
-    const { title, description, category, image } = req.body;
+    const { title, description, category } = req.body;
+
     if (!title || !description) {
       return res.status(400).json({ message: "Title and description required" });
     }
-    const update = await CityUpdate.create({
-      title, description, category, image
+
+    // ✅ Save update
+    const update = await CityUpdate.create({ title, description, category });
+
+    // ✅ Send email to ALL citizens (parallel, non-blocking)
+    const users = await User.find({}, "email name");
+
+    Promise.all(
+      users.map((user) =>
+        sendCityUpdateEmail(user.email, user.name, { title, description })
+      )
+    ).catch((err) => console.error("City update email error:", err));
+
+    res.status(201).json({
+      message: "Update created & emails sent",
+      update,
     });
-    res.status(201).json({ message: "Update created", update });
+
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };

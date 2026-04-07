@@ -1,5 +1,8 @@
 const Document = require("../models/document");
 const { createNotification } = require("./notificationController");
+const { sendCertificateStatusEmail } = require("../utils/emailService");
+const User = require("../models/user");
+
 // Create request
 exports.createRequest = async (req, res) => {
   try {
@@ -33,21 +36,32 @@ exports.getUserDocs = async (req, res) => {
 exports.updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
-
     const doc = await Document.findByIdAndUpdate(
       req.params.id,
       { status },
       { new: true }
-    );
+    ).populate("user", "name email");
 
-    // ✅ Notification create karo
+
+   // ✅ In-app notification
     await createNotification(
-      doc.user,
-      "Certificate Request Updated",
+      doc.user._id,
+      `Certificate Request ${status}`,
       `Your ${doc.type} certificate request has been "${status}"`,
       "certificate",
       "/user/my-certificates"
     );
+
+    // ✅ Email notification
+    try {
+      await sendCertificateStatusEmail(doc.user.email, doc.user.name, {
+        type: doc.type,
+        status,
+        certId: doc._id.toString().slice(-6)
+      });
+    } catch (emailErr) {
+      console.log("Email error:", emailErr.message);
+    }
 
     res.json(doc);
   } catch (err) {
