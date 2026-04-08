@@ -79,6 +79,9 @@ app.use(express.json());
 /* 
    ROUTES
  */
+app.get("/api", (req, res) => {
+  res.json({ message: "API is up and running" });
+});
 const adminAuthRoutes = require("./routes/adminAuth");
 const adminProtectedRoutes = require("./routes/adminProtected");
 const complaintRoutes = require("./routes/complaintRoutes");
@@ -97,6 +100,8 @@ const notificationRoutes = require("./routes/notificationRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const { generalLimiter, authLimiter } = require("./middleware/rateLimiter");
 const feedbackRoutes = require("./routes/feedbackRoutes");
+
+
 
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/admin", adminProtectedRoutes);
