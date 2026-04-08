@@ -11,7 +11,7 @@ const server = http.createServer(app);
 // ✅ ADD THIS (YOU MISSED THIS PART)
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://smart-municipal-corporation.vercel.app/",
     methods: ["GET", "POST"],
   },
 });
