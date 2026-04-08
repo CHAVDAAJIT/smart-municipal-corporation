@@ -23,7 +23,12 @@ function DashboardHome() {
     fetchComplaints();
 
     // ✅ Socket.io connect
-    const socket = io(SOCKET_URL);
+    // ✅ transports add karo
+const socket = io(SOCKET_URL, {
+  transports: ["websocket", "polling"],
+  withCredentials: true,
+});
+    // const socket = io(SOCKET_URL);
 
     socket.on("complaintUpdated", (data) => {
       setLiveAlert("🔔 Your complaint status has been updated!");

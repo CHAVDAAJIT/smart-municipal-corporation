@@ -22,8 +22,10 @@ function AdminLiveChat() {
     fetchRooms();
     fetchAdminName();
 
-    const newSocket = io(SOCKET_URL);
-    setSocket(newSocket);
+    const newSocket = io(SOCKET_URL, {
+  transports: ["websocket", "polling"],
+  withCredentials: true,
+});
 
     newSocket.on("adminNotify", () => {
       fetchRooms();

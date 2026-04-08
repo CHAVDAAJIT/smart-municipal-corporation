@@ -86,9 +86,10 @@ function ChatWidget() {
   useEffect(() => {
     if (!userId) return;
 
-    const newSocket = io(SOCKET_URL);
-    setSocket(newSocket);
-    newSocket.emit("joinRoom", roomId);
+    const newSocket = io(SOCKET_URL, {
+  transports: ["websocket", "polling"],
+  withCredentials: true,
+});
 
     newSocket.on("newLiveMessage", (msg) => {
       setLiveMessages(prev => [...prev, msg]);
