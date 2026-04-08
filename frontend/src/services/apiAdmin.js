@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiAdmin = axios.create({
-  baseURL: import.meta.env.BACKEND_URI || "http://localhost:5173",
+  baseURL: import.meta.env.BACKEND_URI,
 });
 
 apiAdmin.interceptors.request.use((req) => {
