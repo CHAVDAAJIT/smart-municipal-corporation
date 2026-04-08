@@ -10,7 +10,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const SOCKET_URL = "http://localhost:5000";
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "http://localhost:5000";
 const COLORS = ["#e63946", "#1b6ca8", "#059669", "#f57c00"];
 
 function DashboardHome() {
