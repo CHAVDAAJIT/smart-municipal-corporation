@@ -9,7 +9,10 @@ function RegisterComplaint() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    type: "", description: "", area: "", priority: "Medium" // ✅ single state
+    type: "",
+    description: "",
+    area: "",
+    priority: "Medium", // ✅ single state
   });
   const [photos, setPhotos] = useState([]);
   const [previews, setPreviews] = useState([]);
@@ -22,7 +25,7 @@ function RegisterComplaint() {
   const handlePhotos = (e) => {
     const files = [...e.target.files].slice(0, 3);
     setPhotos(files);
-    setPreviews(files.map(f => URL.createObjectURL(f)));
+    setPreviews(files.map((f) => URL.createObjectURL(f)));
   };
 
   const handleSubmit = async (e) => {
@@ -34,9 +37,13 @@ function RegisterComplaint() {
       formData.append("description", form.description);
       formData.append("area", form.area);
       formData.append("priority", form.priority); // ✅ priority add
-      photos.forEach(p => formData.append("photos", p));
+      photos.forEach((p) => formData.append("photos", p));
 
-      const res = await fetch("http://localhost:5000/api/complaints", {
+      const BASE_URL =
+        process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+
+      // handleSubmit mein:
+      const res = await fetch(`${BASE_URL}/complaints`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -62,9 +69,13 @@ function RegisterComplaint() {
               <p className="sub-text">Submit your issue • Earn 10 points! ⭐</p>
 
               <form onSubmit={handleSubmit}>
-
                 {/* Complaint Type */}
-                <select name="type" value={form.type} onChange={handleChange} required>
+                <select
+                  name="type"
+                  value={form.type}
+                  onChange={handleChange}
+                  required
+                >
                   <option value="">Select Complaint Type</option>
                   <option value="Garbage">🚛 Garbage</option>
                   <option value="Water">💧 Water</option>
@@ -97,7 +108,12 @@ function RegisterComplaint() {
                 />
 
                 {/* Priority */}
-                <select name="priority" value={form.priority} onChange={handleChange} required>
+                <select
+                  name="priority"
+                  value={form.priority}
+                  onChange={handleChange}
+                  required
+                >
                   <option value="">Select Priority</option>
                   <option value="Low">🟢 Low — Minor issue</option>
                   <option value="Medium">🟡 Medium — Moderate issue</option>

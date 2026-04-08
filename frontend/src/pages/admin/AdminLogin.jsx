@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/AdminLogin.css";
 
-
-
 function generateCaptcha() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let captcha = "";
@@ -22,34 +20,30 @@ function AdminLogin() {
   const [captchaInput, setCaptchaInput] = useState("");
   const navigate = useNavigate();
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (captchaInput !== captcha) {
-    alert("Invalid Captcha");
-    return;
-  }
+    if (captchaInput !== captcha) {
+      alert("Invalid Captcha");
+      return;
+    }
 
-  try {
-    const res = await axios.post(
-      "http://localhost:5000/api/admin/login",
-      {
-        email: email,
-        password: password,
-      }
-    );
-    localStorage.removeItem("userToken")
-    localStorage.setItem("adminToken", res.data.token);
-    alert("Admin Login Successful");
+    try {
+      // axios.post ki jagah:
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL || "http://localhost:5000/api"}/admin/login`,
+        { email, password },
+      );
+      localStorage.removeItem("userToken");
+      localStorage.setItem("adminToken", res.data.token);
+      alert("Admin Login Successful");
 
-    // ✅ PROPER REDIRECT
-    navigate("/admin/dashboard");
-
-  } catch (err) {
-    alert(err.response?.data?.message || "Login failed");
-  }
-};
-
+      // ✅ PROPER REDIRECT
+      navigate("/admin/dashboard");
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    }
+  };
 
   return (
     <div className="admin-login-page">

@@ -3,8 +3,8 @@ import { io } from "socket.io-client";
 import axios from "axios";
 import "../../styles/Chat.css";
 
-const SOCKET_URL = "http://localhost:5000";
-const BASE_URL = "http://localhost:5000/api";
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "http://localhost:5000";
+const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 const quickQuestions = [
   "📋 Register complaint",

@@ -6,7 +6,7 @@ import AdminHeader from "../../components/admin/AdminHeader";
 import "../../styles/AdminDashboard.css";
 import "../../styles/Chat.css";
 
-const SOCKET_URL = "http://localhost:5000";
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "http://localhost:5000";
 
 function AdminLiveChat() {
   const [rooms, setRooms] = useState([]);
