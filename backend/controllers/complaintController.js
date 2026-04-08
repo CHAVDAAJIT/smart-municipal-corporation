@@ -8,36 +8,34 @@ const {
 /* ================= USER ================= */
 
 // Register complaint
+// registerComplaint mein photos path update karo
 exports.registerComplaint = async (req, res) => {
   try {
-    const { title, type, description, area, priority, location } = req.body;
+    const { type, description, area, priority } = req.body;
 
     if (!type || !description || !area) {
       return res.status(400).json({ message: "All fields required" });
     }
 
+    // ✅ Cloudinary se URL lo — path ki jagah
     const photos = req.files ? req.files.map(f => f.path) : [];
+    // f.path = cloudinary URL hoga automatically
 
     const complaint = await Complaint.create({
       user: req.user.id,
-      title,
       type,
-      location,
       description,
       area,
       priority: priority || "Medium",
       photos,
       status: "Pending",
-      timeline: [
-        {
-          status: "Pending",
-          message: "Complaint submitted successfully",
-          timestamp: new Date()
-        }
-      ]
+      timeline: [{
+        status: "Pending",
+        message: "Complaint submitted successfully",
+        timestamp: new Date()
+      }]
     });
 
-    // +10 points
     await User.findByIdAndUpdate(req.user.id, {
       $inc: { points: 10, totalPointsEarned: 10 }
     });
@@ -49,15 +47,6 @@ exports.registerComplaint = async (req, res) => {
       "complaint",
       "/user/complaints"
     );
-
-    // ✅ socket event
-    if (global.io) {
-      global.io.emit("newComplaint", {
-        type,
-        area,
-        userId: req.user.id
-      });
-    }
 
     res.status(201).json({
       message: "Complaint registered successfully",

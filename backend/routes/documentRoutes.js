@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
+
+// ✅ Cloudinary uploader
+const { uploadDocumentFiles } = require("../utils/cloudinary");
 
 const {
   createRequest,
@@ -12,14 +14,12 @@ const {
 const userAuth = require("../middleware/userAuth");
 const adminAuth = require("../middleware/adminAuth");
 
-const upload = multer({ dest: "uploads/" });
-
 // User
-router.post("/request", userAuth, upload.array("documents", 5), createRequest);
+router.post("/request", userAuth, uploadDocumentFiles, createRequest);
 router.get("/", userAuth, getUserDocs);
 
 // Admin
-router.put("/:id/status", adminAuth, updateStatus);
 router.get("/all", adminAuth, getAllDocuments);
+router.put("/:id/status", adminAuth, updateStatus);
 
 module.exports = router;

@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
  */
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
 
 /* 
    ROUTES
@@ -128,7 +128,7 @@ app.use("/api/auth", authLimiter);
    DATABASE
  */
 mongoose
-  .connect("mongodb://127.0.0.1:27017/smartMunicipal")
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 

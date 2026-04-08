@@ -195,26 +195,26 @@ function ComplaintsManagement() {
               </p>
             </div>
 
-            {/* ✅ Photos — modal ke andar */}
-            {selected.photos && selected.photos.length > 0 && (
-              <div className="cert-modal-data">
-                <h4>📸 Complaint Photos</h4>
-                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "8px" }}>
-                  {selected.photos.map((photo, i) => (
-                    <img
-                      key={i}
-                      src={`http://localhost:5000/${photo}`}
-                      alt={`complaint-${i}`}
-                      style={{
-                        width: "100px", height: "100px",
-                        objectFit: "cover", borderRadius: "8px",
-                        border: "2px solid #eef2f7"
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* ✅ Cloudinary URL directly use karo — localhost nahi */}
+{selected.photos && selected.photos.length > 0 && (
+  <div className="cert-modal-data">
+    <h4>📸 Complaint Photos</h4>
+    <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "8px" }}>
+      {selected.photos.map((photo, i) => (
+        <img
+          key={i}
+          src={photo} // ✅ Direct Cloudinary URL — localhost nahi
+          alt={`complaint-${i}`}
+          style={{
+            width: "100px", height: "100px",
+            objectFit: "cover", borderRadius: "8px",
+            border: "2px solid #eef2f7"
+          }}
+        />
+      ))}
+    </div>
+  </div>
+)}
 
             {/* Assign Department */}
             <div className="cert-modal-data">

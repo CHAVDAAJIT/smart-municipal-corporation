@@ -276,24 +276,24 @@ const [myFeedbacks, setMyFeedbacks] = useState([]);
 
             {/* Photos */}
             {selected.photos && selected.photos.length > 0 && (
-              <div className="cert-modal-data">
-                <h4>📸 Photos</h4>
-                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "8px" }}>
-                  {selected.photos.map((photo, i) => (
-                    <img
-                      key={i}
-                      src={`http://localhost:5000/${photo}`}
-                      alt={`complaint-${i}`}
-                      style={{
-                        width: "90px", height: "90px",
-                        objectFit: "cover", borderRadius: "8px",
-                        border: "2px solid #eef2f7"
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+  <div className="cert-modal-data">
+    <h4>📸 Photos</h4>
+    <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "8px" }}>
+      {selected.photos.map((photo, i) => (
+        <img
+          key={i}
+          src={photo} // ✅ Direct Cloudinary URL
+          alt={`complaint-${i}`}
+          style={{
+            width: "90px", height: "90px",
+            objectFit: "cover", borderRadius: "8px",
+            border: "2px solid #eef2f7"
+          }}
+        />
+      ))}
+    </div>
+  </div>
+)}
 
             
 
