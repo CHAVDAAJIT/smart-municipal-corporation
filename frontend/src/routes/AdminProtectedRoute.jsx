@@ -13,8 +13,10 @@ function AdminProtectedRoute({ children }) {
       return;
     }
 
+
+    const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
     axios
-      .get("http://localhost:5000/api/admin/verify", {
+      .get(`${BASE_URL}/admin/verify`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
