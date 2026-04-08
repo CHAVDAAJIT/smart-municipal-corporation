@@ -7,9 +7,9 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
   // ✅ Production ke liye
-  tls: {
-    rejectUnauthorized: false
-  }
+  // tls: {
+  //   rejectUnauthorized: false
+  // }
 });
 // const nodemailer = require("nodemailer");
 

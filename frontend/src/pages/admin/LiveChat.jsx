@@ -23,9 +23,12 @@ function AdminLiveChat() {
     fetchAdminName();
 
     const newSocket = io(SOCKET_URL, {
-  transports: ["websocket", "polling"],
-  withCredentials: true,
-});
+      transports: ["websocket", "polling"],
+      withCredentials: true,
+    });
+
+    // ✅ FIX 1: setSocket call karo
+    setSocket(newSocket);
 
     newSocket.on("adminNotify", () => {
       fetchRooms();
@@ -56,26 +59,22 @@ function AdminLiveChat() {
     } catch (err) { console.log(err); }
   };
 
-  // ✅ Room select fix
   const selectRoom = async (room) => {
     setSelectedRoom(room);
     setMessages([]);
     setLoading(true);
 
-    // Join socket room
+    // ✅ FIX 2: socket check sahi kaam karega ab
     if (socket) {
       socket.emit("joinRoom", room._id);
     }
 
     try {
-      // ✅ Load history
       const res = await API.get(`/chat/admin-history/${room._id}`);
       setMessages(res.data);
 
-      // Mark as read
       await API.put(`/chat/read/${room._id}`);
 
-      // Update room unread count
       setRooms(prev => prev.map(r =>
         r._id === room._id ? { ...r, unread: 0 } : r
       ));
@@ -86,6 +85,7 @@ function AdminLiveChat() {
   };
 
   const sendMessage = () => {
+    // ✅ FIX 3: ab socket null nahi hoga
     if (!input.trim() || !socket || !selectedRoom) return;
     socket.emit("adminMessage", {
       message: input,
@@ -94,6 +94,105 @@ function AdminLiveChat() {
     });
     setInput("");
   };
+
+  // ... baaki sab same rehta hai
+
+// import { useEffect, useRef, useState } from "react";
+// import { io } from "socket.io-client";
+// import API from "../../services/apiAdmin";
+// import AdminSidebar from "../../components/admin/AdminSidebar";
+// import AdminHeader from "../../components/admin/AdminHeader";
+// import "../../styles/AdminDashboard.css";
+// import "../../styles/Chat.css";
+
+// const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "http://localhost:5000";
+
+// function AdminLiveChat() {
+//   const [rooms, setRooms] = useState([]);
+//   const [selectedRoom, setSelectedRoom] = useState(null);
+//   const [messages, setMessages] = useState([]);
+//   const [input, setInput] = useState("");
+//   const [socket, setSocket] = useState(null);
+//   const [adminName, setAdminName] = useState("Admin");
+//   const [loading, setLoading] = useState(false);
+//   const messagesEndRef = useRef(null);
+
+//   useEffect(() => {
+//     fetchRooms();
+//     fetchAdminName();
+
+//     const newSocket = io(SOCKET_URL, {
+//   transports: ["websocket", "polling"],
+//   withCredentials: true,
+// });
+
+//     newSocket.on("adminNotify", () => {
+//       fetchRooms();
+//     });
+
+//     newSocket.on("newLiveMessage", (msg) => {
+//       setMessages(prev => [...prev, msg]);
+//     });
+
+//     return () => newSocket.disconnect();
+//   }, []);
+
+//   useEffect(() => {
+//     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+//   }, [messages]);
+
+//   const fetchAdminName = async () => {
+//     try {
+//       const res = await API.get("/settings/profile");
+//       setAdminName(res.data.name || "Admin");
+//     } catch (err) { console.log(err); }
+//   };
+
+//   const fetchRooms = async () => {
+//     try {
+//       const res = await API.get("/chat/rooms");
+//       setRooms(res.data);
+//     } catch (err) { console.log(err); }
+//   };
+
+//   // ✅ Room select fix
+//   const selectRoom = async (room) => {
+//     setSelectedRoom(room);
+//     setMessages([]);
+//     setLoading(true);
+
+//     // Join socket room
+//     if (socket) {
+//       socket.emit("joinRoom", room._id);
+//     }
+
+//     try {
+//       // ✅ Load history
+//       const res = await API.get(`/chat/admin-history/${room._id}`);
+//       setMessages(res.data);
+
+//       // Mark as read
+//       await API.put(`/chat/read/${room._id}`);
+
+//       // Update room unread count
+//       setRooms(prev => prev.map(r =>
+//         r._id === room._id ? { ...r, unread: 0 } : r
+//       ));
+//     } catch (err) {
+//       console.log("Chat history error:", err);
+//     }
+//     setLoading(false);
+//   };
+
+//   const sendMessage = () => {
+//     if (!input.trim() || !socket || !selectedRoom) return;
+//     socket.emit("adminMessage", {
+//       message: input,
+//       roomId: selectedRoom._id,
+//       adminName
+//     });
+//     setInput("");
+//   };
 
   const getTime = (date) => {
     return new Date(date).toLocaleTimeString("en-IN", {

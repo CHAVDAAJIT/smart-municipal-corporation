@@ -84,28 +84,55 @@ function ChatWidget() {
   }, []);
 
   useEffect(() => {
-    if (!userId) return;
+  if (!userId) return;
 
-    const newSocket = io(SOCKET_URL, {
-  transports: ["websocket", "polling"],
-  withCredentials: true,
-});
+  const newSocket = io(SOCKET_URL, {
+    transports: ["websocket", "polling"],
+    withCredentials: true,
+  });
 
-    newSocket.on("newLiveMessage", (msg) => {
-      setLiveMessages(prev => [...prev, msg]);
-      if (activeTab !== "live") setUnread(true);
-    });
+  // ✅ FIX 1: setSocket call karo
+  setSocket(newSocket);
 
-    return () => newSocket.disconnect();
-  }, [userId]);
+  // ✅ FIX 2: Room join karo immediately
+  newSocket.emit("joinRoom", roomId);
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [botMessages]);
+  newSocket.on("connect", () => {
+    // Reconnect hone pe bhi room join karo
+    newSocket.emit("joinRoom", roomId);
+  });
 
-  useEffect(() => {
-    liveEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [liveMessages]);
+  newSocket.on("newLiveMessage", (msg) => {
+    setLiveMessages(prev => [...prev, msg]);
+    if (activeTab !== "live") setUnread(true);
+  });
+
+  return () => newSocket.disconnect();
+}, [userId]);
+
+//   useEffect(() => {
+//     if (!userId) return;
+
+//     const newSocket = io(SOCKET_URL, {
+//   transports: ["websocket", "polling"],
+//   withCredentials: true,
+// });
+
+//     newSocket.on("newLiveMessage", (msg) => {
+//       setLiveMessages(prev => [...prev, msg]);
+//       if (activeTab !== "live") setUnread(true);
+//     });
+
+//     return () => newSocket.disconnect();
+//   }, [userId]);
+
+//   useEffect(() => {
+//     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+//   }, [botMessages]);
+
+//   useEffect(() => {
+//     liveEndRef.current?.scrollIntoView({ behavior: "smooth" });
+//   }, [liveMessages]);
 
   // ✅ Load live chat history when switching to live tab
   const loadLiveHistory = async () => {
