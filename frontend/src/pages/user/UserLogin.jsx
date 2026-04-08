@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../../styles/UserAuth.css";
 
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = import.meta.env.BACKEND_URI;
 
 function generateCaptcha() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
