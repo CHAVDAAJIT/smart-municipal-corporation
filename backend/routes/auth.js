@@ -273,6 +273,17 @@ router.post("/login/user", async (req, res) => {
   try {
     const { email, password, captcha, captchaText } = req.body;
 
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+
+    // ✅ Mobile check bhi karo — yahi missing tha!
+    const existingMobile = await User.findOne({ mobile });
+    if (existingMobile) {
+      return res.status(400).json({ message: "Mobile number already registered" });
+    }
+
     if (captcha !== captchaText) {
       return res.status(400).json({ message: "Invalid captcha" });
     }
