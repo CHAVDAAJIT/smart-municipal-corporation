@@ -9,13 +9,13 @@ const app = express();
 const server = http.createServer(app);
 
 // ✅ CORS origin function
+// ❌ PURANA — yeh replace karo
 const allowedOrigins = [
   "http://localhost:3000",
   "https://smart-municipal-corporation.vercel.app",
   process.env.CLIENT_URL,
 ].filter(Boolean);
 
-// ✅ Express CORS
 app.use(cors({
   origin: function(origin, callback) {
     if (!origin) return callback(null, true);
@@ -27,13 +27,27 @@ app.use(cors({
       callback(null, true);
     } else {
       console.log("CORS blocked:", origin);
-      callback(null, true); // ✅ Production mein sab allow karo
+      callback(null, true);
     }
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
+// ✅ NAYA — yeh lagao
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://smart-municipal-corporation.vercel.app",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+// ✅ Preflight requests ke liye zaroori
+app.options("*", cors());
 
 // ✅ Socket.io CORS
 const io = new Server(server, {

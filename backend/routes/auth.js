@@ -127,53 +127,53 @@ router.post("/resend-otp", async (req, res) => {
 });
 
 /* ================= USER LOGIN ================= */
-router.post("/login/user", async (req, res) => {
-  try {
-    const { email, password, captcha, captchaText } = req.body;
+// router.post("/login/user", async (req, res) => {
+//   try {
+//     const { email, password, captcha, captchaText } = req.body;
 
-    if (captcha !== captchaText) {
-      return res.status(400).json({ message: "Invalid captcha" });
-    }
+//     if (captcha !== captchaText) {
+//       return res.status(400).json({ message: "Invalid captcha" });
+//     }
 
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(400).json({ message: "Invalid credentials" });
+//     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       return res.status(400).json({ message: "Invalid credentials" });
+//     }
 
-    // Check if verified
-    if (!user.isVerified) {
-      // Resend OTP
-      await OTP.deleteMany({ email, type: "verify" });
-      const otp = generateOTP();
-      await OTP.create({
-        email, otp, type: "verify",
-        expiresAt: new Date(Date.now() + 10 * 60 * 1000)
-      });
-      await sendOTPEmail(email, otp, user.name);
+//     // Check if verified
+//     if (!user.isVerified) {
+//       // Resend OTP
+//       await OTP.deleteMany({ email, type: "verify" });
+//       const otp = generateOTP();
+//       await OTP.create({
+//         email, otp, type: "verify",
+//         expiresAt: new Date(Date.now() + 10 * 60 * 1000)
+//       });
+//       await sendOTPEmail(email, otp, user.name);
 
-      return res.status(403).json({
-        message: "Email not verified. OTP sent!",
-        requiresVerification: true,
-        email
-      });
-    }
+//       return res.status(403).json({
+//         message: "Email not verified. OTP sent!",
+//         requiresVerification: true,
+//         email
+//       });
+//     }
 
-    const token = jwt.sign(
-      { id: user._id, role: "user", email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+//     const token = jwt.sign(
+//       { id: user._id, role: "user", email: user.email },
+//       process.env.JWT_SECRET,
+//       { expiresIn: "1d" }
+//     );
 
-    res.json({ message: "User login successful", token });
-  } catch (err) {
-    res.status(500).json({ message: "Login failed" });
-  }
-});
+//     res.json({ message: "User login successful", token });
+//   } catch (err) {
+//     res.status(500).json({ message: "Login failed" });
+//   }
+// });
 
 /* ================= FORGOT PASSWORD ================= */
 router.post("/forgot-password", async (req, res) => {
