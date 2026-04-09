@@ -47,7 +47,7 @@ app.use(cors({
 }));
 
 // ✅ Preflight requests ke liye zaroori
-app.options("*", cors());
+app.options(/(.*)/, cors());
 
 // ✅ Socket.io CORS
 const io = new Server(server, {
