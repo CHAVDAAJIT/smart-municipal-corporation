@@ -1,17 +1,29 @@
 const nodemailer = require("nodemailer");
 
 // ✅ Har baar naya transporter banao — App Password ke saath reliable hai
+// const createTransporter = () => {
+//   return nodemailer.createTransport({
+//     host: "smtp.gmail.com",
+//     port: 465,
+//     secure: true,
+//     auth: {
+//       user: process.env.EMAIL_USER,
+//       pass: process.env.EMAIL_PASS, // ← Gmail App Password (16 digit)
+//     },
+//     tls: {
+//       rejectUnauthorized: false,
+//     },
+//   });
+// };
+
 const createTransporter = () => {
   return nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    host: "smtp-relay.brevo.com",
+    port: 587,
+    secure: false,
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS, // ← Gmail App Password (16 digit)
-    },
-    tls: {
-      rejectUnauthorized: false,
+      pass: process.env.EMAIL_PASS,
     },
   });
 };
